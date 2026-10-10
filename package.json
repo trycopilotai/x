@@ -1,0 +1,41 @@
+{
+  "name": "@tryc.ai/x",
+  "version": "0.1.0",
+  "description": "A repository command dispatcher driven by x.toml: one command list behind x, make and your coding agent.",
+  "license": "MIT",
+  "author": "Pramod Kotipalli",
+  "homepage": "https://github.com/trycopilotai/x#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trycopilotai/x.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trycopilotai/x/issues"
+  },
+  "keywords": [
+    "cli",
+    "task-runner",
+    "makefile",
+    "toml",
+    "agent-skills",
+    "claude-code",
+    "codex"
+  ],
+  "bin": {
+    "x": "bin/x.js"
+  },
+  "files": [
+    "bin/x.js",
+    "__main__.py",
+    "x/*.py",
+    "docs/reference.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

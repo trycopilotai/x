@@ -1,0 +1,4 @@
+# Hashes and the generated Makefile are compared as bytes, so every
+# checkout gets the same line endings.
+* text=auto eol=lf
+*.png binary

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-10",
+  "skill": {
+    "path": "skills/x/SKILL.md",
+    "sha256": "63d4224b2f3b19225dd5b9a610e9a026485cff233d255703e7ba3d2f34595274"
+  },
+  "interface": {
+    "path": "skills/x/agents/openai.yaml",
+    "sha256": "00d03ef9c45e6884173115dfb110b8ada4c2b39dacfc5f5888fe5ffab76855b1"
+  },
+  "programs": [
+    {
+      "path": "__main__.py",
+      "sha256": "3429768ab7555ecd7e4ad31e5bed508a35d33e019fbc3f637f09691bd67cd0dc"
+    },
+    {
+      "path": "bin/x.js",
+      "sha256": "4373ce2ffdbf092489320d0abebacf2a8d7a69ad6ea2fe0b3d3ee979916e1921"
+    },
+    {
+      "path": "x/__init__.py",
+      "sha256": "3caf978643340721b4e7b1028be3da8cec8a30988f05710c1b1c6fbe6dd3e964"
+    },
+    {
+      "path": "x/commands.py",
+      "sha256": "feb99d75335ed019de02bc711de78116fc265953c0ea6bca28041a7a07b44188"
+    },
+    {
+      "path": "x/config.py",
+      "sha256": "f564579cd56f66a24aba21b56e5e406155a1467b31d97b07a778ba90a27da478"
+    },
+    {
+      "path": "x/context.py",
+      "sha256": "51c73ec8f24aa902c6991f402a3a0ab917a6e4490716f8181ca16130210f80e0"
+    },
+    {
+      "path": "x/dispatch.py",
+      "sha256": "c0a163c123af5bea6e453d8de140097d72f7f90ea25ec89143f6febc3d0a6414"
+    },
+    {
+      "path": "x/execution.py",
+      "sha256": "7ebdaa65cdb28e0536a41df16740e2dc320b52a8eb85dd4c9e15d1a59979b37e"
+    },
+    {
+      "path": "x/handlers.py",
+      "sha256": "55b1cb7675ee2aa4c1d5718b933f29e9a0a35986120a235702150bd7909e8135"
+    },
+    {
+      "path": "x/help.py",
+      "sha256": "0aac6716f62cfb05005e1c22373dcfe7de52569fe0d1507e59a3d2ce71be7541"
+    },
+    {
+      "path": "x/main.py",
+      "sha256": "c5d62d88bb7c86630b8e6837d7996e7ede116c8b84e1c442387927e855a57cc0"
+    },
+    {
+      "path": "x/makefile.py",
+      "sha256": "8f97a8a2d2ac518dda8e222e9a412506c954cad7006bcc93b742b00261aee7e1"
+    },
+    {
+      "path": "x/model.py",
+      "sha256": "0123886b068b696d331eb51640c3eed955271ce9f31be6df3cfc6469bee834eb"
+    },
+    {
+      "path": "x/registry.py",
+      "sha256": "0d5cc68cdbd120034021992efa418279399512708ee55bd81eba399f007c29f3"
+    },
+    {
+      "path": "x/sessions.py",
+      "sha256": "d4d54cf68e2566186ccf5eddedda83de6a90bf8498198eb05939c47886dcc231"
+    },
+    {
+      "path": "x/wsl.py",
+      "sha256": "147a51398522c626ffe3be455bb94bc5f0961e0044fbd18c71c426058c56c1c3"
+    }
+  ],
+  "agent": {
+    "invoked_the_skill": false,
+    "note": "No agent session followed the x skill to produce this evidence. The transcript records one terminal session with the command-line tool, run by scripts/record_session.py while this release was being prepared."
+  },
+  "invocation": {
+    "commands": [
+      "x init",
+      "x help",
+      "x hello world",
+      "printf '\\n[make]\\nlauncher = \"x\"\\n' >> x.toml",
+      "x makefile",
+      "tail -3 Makefile",
+      "make hello ARGS=again",
+      "x makefile --check && echo up to date"
+    ],
+    "interpreter": "Python 3.13.13",
+    "node": "Node 26.10.0",
+    "working_directory": "an empty throwaway directory, with x and python3 put on PATH ahead of /usr/bin and /bin"
+  },
+  "output": {
+    "path": "evidence/transcripts/session.txt",
+    "sha256": "b33d6065b34115043fa7dcc3f3b85ba8cb8c6c19cb3cf1d9aa2bfffdadaf9862",
+    "edited": false,
+    "transforms": [],
+    "note": "scripts/record_session.py wrote each line that starts with \"$ \": it is the command that was run, prefixed. Every other line is that command's combined standard output and standard error, unedited."
+  }
+}

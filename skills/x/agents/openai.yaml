@@ -1,0 +1,6 @@
+interface:
+  display_name: "x"
+  short_description: "Find, run and edit a repository's x.toml commands"
+  default_prompt:
+    "Use $x to list this repository's commands and run the
+    one I ask for."

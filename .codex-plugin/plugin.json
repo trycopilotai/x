@@ -1,0 +1,31 @@
+{
+  "name": "x",
+  "version": "0.1.0",
+  "description": "Find, run, add and change a repository's commands through x, a dispatcher driven by an x.toml file.",
+  "author": {
+    "name": "Pramod Kotipalli"
+  },
+  "homepage": "https://github.com/trycopilotai/x",
+  "repository": "https://github.com/trycopilotai/x",
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "task-runner",
+    "makefile",
+    "toml",
+    "developer-tools"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "x",
+    "shortDescription": "Find, run and edit a repository's x.toml commands",
+    "longDescription": "List the commands a repository declares in x.toml, run them at the pinned version, add or change one, and keep the generated Makefile in step.",
+    "developerName": "Pramod Kotipalli",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write", "Execute"],
+    "websiteURL": "https://github.com/trycopilotai/x",
+    "defaultPrompt": [
+      "Use $x to list this repository's commands and run the one I ask for."
+    ]
+  }
+}

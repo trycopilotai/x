@@ -1,0 +1,19 @@
+{
+  "name": "x",
+  "version": "0.1.0",
+  "description": "Find, run, add and change a repository's commands through x, a dispatcher driven by an x.toml file.",
+  "author": {
+    "name": "Pramod Kotipalli"
+  },
+  "homepage": "https://github.com/trycopilotai/x",
+  "repository": "https://github.com/trycopilotai/x",
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "task-runner",
+    "makefile",
+    "toml",
+    "developer-tools"
+  ],
+  "skills": "./skills/"
+}

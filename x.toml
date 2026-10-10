@@ -1,0 +1,29 @@
+# This repository's own commands, run through the launcher in
+# this checkout rather than a published version.
+
+[x]
+version = "0.1.0"
+
+[commands.test]
+description = "Run the test suite."
+run = ["{python}", "-B", "-m", "unittest", "discover", "-s", "tests", "-t", ".", "-p", "*_test.py"]
+
+[commands.pack]
+description = "List the files the npm package would ship."
+run = ["npm", "pack", "--dry-run"]
+
+[commands.record]
+description = "Record the evidence session again and refresh its manifest."
+run = ["{python}", "-B", "scripts/record_session.py"]
+
+[commands.demo]
+description = "Rebuild the demo and poster from the recorded session."
+run = ["{python}", "-B", "scripts/generate_demo.py"]
+
+[commands.social-preview]
+description = "Render the social preview from its HTML source."
+run = ["{python}", "-B", "assets/build.py"]
+
+[make]
+launcher = "node bin/x.js"
+default = "test"

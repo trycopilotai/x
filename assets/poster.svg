@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="720" viewBox="0 0 880 720" role="img" aria-labelledby="title description">
+  <title id="title">Terminal session with x</title>
+  <desc id="description">A terminal runs 8 commands in an empty folder. x init writes a starter x.toml, x help lists its one command, and x hello runs it with an argument. After a make table is added to x.toml, x makefile writes a Makefile and make hello runs the same command. x makefile --check then exits with status 0, so the shell prints: up to date. No agent follows the skill.</desc>
+  <rect width="880" height="720" rx="24" fill="#101418" />
+  <circle cx="40" cy="40" r="9" fill="#ff6b6b" />
+  <circle cx="70" cy="40" r="9" fill="#ffd166" />
+  <circle cx="100" cy="40" r="9" fill="#55d6be" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">
+    <g class="step-1">
+      <text x="40" y="86" fill="#f7fbff" xml:space="preserve">$ x init</text>
+      <text x="40" y="114" fill="#a7bac5" xml:space="preserve">wrote x.toml</text>
+    </g>
+    <g class="step-2">
+      <text x="40" y="154" fill="#f7fbff" xml:space="preserve">$ x help</text>
+      <text x="40" y="182" fill="#a7bac5" xml:space="preserve">hello   Say hello.</text>
+    </g>
+    <g class="step-3">
+      <text x="40" y="222" fill="#f7fbff" xml:space="preserve">$ x hello world</text>
+      <text x="40" y="250" fill="#a7bac5" xml:space="preserve">hello from x world</text>
+    </g>
+    <g class="step-4">
+      <text x="40" y="290" fill="#f7fbff" xml:space="preserve">$ printf &#x27;\n[make]\nlauncher = &quot;x&quot;\n&#x27; &gt;&gt; x.toml</text>
+    </g>
+    <g class="step-5">
+      <text x="40" y="330" fill="#f7fbff" xml:space="preserve">$ x makefile</text>
+    </g>
+    <g class="step-6">
+      <text x="40" y="370" fill="#f7fbff" xml:space="preserve">$ tail -3 Makefile</text>
+      <text x="40" y="398" fill="#a7bac5" xml:space="preserve">.PHONY: hello</text>
+      <text x="40" y="426" fill="#a7bac5" xml:space="preserve">hello:</text>
+      <text x="40" y="454" fill="#a7bac5" xml:space="preserve">        @$(X) hello $(ARGS)</text>
+    </g>
+    <g class="step-7">
+      <text x="40" y="494" fill="#f7fbff" xml:space="preserve">$ make hello ARGS=again</text>
+      <text x="40" y="522" fill="#a7bac5" xml:space="preserve">hello from x again</text>
+    </g>
+    <g class="step-8">
+      <text x="40" y="562" fill="#f7fbff" xml:space="preserve">$ x makefile --check &amp;&amp; echo up to date</text>
+      <text x="40" y="590" fill="#55d6be" xml:space="preserve">up to date</text>
+    </g>
+  </g>
+  <text x="40" y="692" fill="#a7bac5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">A recorded session, from evidence/transcripts/session.txt</text>
+</svg>
