@@ -5,6 +5,11 @@ declares the commands; `x <command>` runs them, a generated
 Makefile makes `make <command>` run the same thing, and a
 coding agent reads the same list as JSON.
 
+Version 0.1.0 is not published to npm yet. The npm commands
+below apply only after the later npm release. For this
+private candidate, use `node /absolute/path/to/x/bin/x.js`
+in place of `npx @tryc.ai/x`.
+
 ```sh
 npx @tryc.ai/x init     # write a starter x.toml
 npx @tryc.ai/x help     # list the commands
@@ -58,6 +63,10 @@ as `npx @tryc.ai/x` otherwise. The fourth command sets
 agent following the skill.
 
 **Not measured, stated up front.**
+
+- npm 0.1.0 publication and four-scope ownership are not
+  established by the repository evidence. Local tarball
+  checks do not establish registry availability.
 
 - The animated demo is a scripted tool session. A separate
   Codex skill exercise is recorded below. Claude execution
@@ -244,16 +253,16 @@ the code does there.
 
 ## Names on npm
 
-The publisher holds four npm scopes and publishes the same
-files under each, so any of these names runs the same tool.
-The generated Makefile and the re-run of a pinned version
-always use `@tryc.ai/x`.
+The release tooling builds identical files for four planned
+npm names. These names are intended to run the same tool
+after the later npm publication gate. The generated Makefile
+and the re-run of a pinned version always use `@tryc.ai/x`.
 
 ```text
 @tryc.ai/x    @trycopilotai/x    @trycopilot.ai/x    @trycai/x
 ```
 
-To skip `npx` on every run, install it once and call `x`:
+After npm publication, install it once and call `x`:
 
 ```sh
 npm install --global @tryc.ai/x@0.1.0
@@ -411,8 +420,11 @@ editing files. Their transcripts do not establish
 marketplace plugin selection or the invocation form.
 
 [`evidence/agent-manifest.json`](evidence/agent-manifest.json)
-binds the input commit, skill, fixture bytes and
-transcripts.
+binds the input commit, executed skill, fixture bytes and
+transcripts. The primary exercise used the preserved
+[`evidence/SKILL_EXECUTED.md`](evidence/SKILL_EXECUTED.md);
+the current skill adds the unpublished npm status and local
+launcher instructions after that run.
 [`codex-skill.jsonl`](evidence/transcripts/codex-skill.jsonl)
 [`codex-discovery.jsonl`](evidence/transcripts/codex-discovery.jsonl)
 and

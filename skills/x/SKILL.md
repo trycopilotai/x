@@ -19,7 +19,12 @@ in `x.toml`. People run a command as `x <command>`,
 Makefile, and you read the same list as JSON.
 
 Requirements: Node 18 or newer and Python 3.11 or newer.
-Nothing needs installing first; `npx` fetches the package.
+Version 0.1.0 is not published to npm yet. The npm commands
+in this skill apply after the later npm release. For an
+unpublished checkout, use
+`node /absolute/path/to/x/bin/x.js` as `<x>` below. After
+publication, `npx` fetches the package without a global
+installation.
 
 ## 1. Find the pinned version
 

@@ -9,8 +9,9 @@
   },
   "invocation": "$x Use the installed x skill to inspect this synthetic repository's commands, run hello with the argument \"two words\", add a root command named greet that prints \"greetings\" followed by its arguments using the existing Python-command pattern, regenerate the Makefile through x, run greet with \"friend\", run make greet ARGS=friend, and validate configuration and Makefile freshness. Report exact outputs. Follow AGENTS.md. Do not hand-edit Makefile, change the version pin, commit or publish.\n",
   "skill": {
-    "path": "skills/x/SKILL.md",
-    "sha256": "4279610447c97de2d078540afc1c5f7dc04499372350e3405e4d747d3b0b5744"
+    "path": "evidence/SKILL_EXECUTED.md",
+    "sha256": "4279610447c97de2d078540afc1c5f7dc04499372350e3405e4d747d3b0b5744",
+    "scope": "Exact skill bytes used by the recorded primary exercise, preserved before adding unpublished npm status and local launcher instructions to the current skill. Current skill execution after that documentation change is unverified."
   },
   "output": {
     "path": "evidence/transcripts/codex-skill.jsonl",
@@ -53,7 +54,10 @@
     "Windows",
     "startup latency",
     "resume against live agents",
-    "marketplace plugin selection and invocation form in the two earlier runs"
+    "marketplace plugin selection and invocation form in the two earlier runs",
+    "npm 0.1.0 publication",
+    "four-scope ownership in repository evidence",
+    "current skill execution after npm-status documentation change"
   ],
   "input_worktree": "Formatting changes applied to the input commit before this run; exact skill and fixture bytes are bound below.",
   "runtime_validation": {
