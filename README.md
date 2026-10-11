@@ -6,9 +6,9 @@ Makefile makes `make <command>` run the same thing, and a
 coding agent reads the same list as JSON.
 
 Version 0.1.0 is not published to npm yet. The npm commands
-below apply only after the later npm release. For this
-private candidate, use `node /absolute/path/to/x/bin/x.js`
-in place of `npx @tryc.ai/x`.
+below apply only after the later npm release. For a
+checkout, use `node /absolute/path/to/x/bin/x.js` in place
+of `npx @tryc.ai/x`.
 
 ```sh
 npx @tryc.ai/x init     # write a starter x.toml
@@ -61,6 +61,50 @@ as `npx @tryc.ai/x` otherwise. The fourth command sets
 `x`; leave the line out and the Makefile calls
 `npx --yes @tryc.ai/x@0.1.0`. The image does not show an
 agent following the skill.
+
+## Install globally and use `x`
+
+After npm publication, install the pinned package once:
+
+```sh
+npm install --global @tryc.ai/x@0.1.0
+```
+
+Until then, install the same CLI from this repository:
+
+```sh
+git clone https://github.com/trycopilotai/x.git
+cd x
+npm pack
+npm install --global ./tryc.ai-x-0.1.0.tgz
+```
+
+Node 18 or newer and Python 3.11 or newer are required. Put
+npm's global executable directory on your terminal's `PATH`:
+`$(npm prefix --global)/bin` on macOS and Linux, or the
+`npm prefix --global` directory on Windows. The package
+installs an executable named `x`.
+
+In a new, empty working folder, call it directly:
+
+```sh
+x --version
+x init
+x hello "two words"
+```
+
+Captured output after an isolated global tarball install:
+
+```text
+0.1.0
+wrote x.toml
+hello from x two words
+```
+
+The install used a fresh npm prefix and a fresh shell with
+its executable directory on `PATH`; it did not use `npx` or
+an alias. This verifies the checkout package, not npm
+registry availability.
 
 **Not measured, stated up front.**
 
