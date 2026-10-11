@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "date": "2026-10-10",
+  "date": "2026-10-11",
   "skill": {
     "path": "skills/x/SKILL.md",
-    "sha256": "4279610447c97de2d078540afc1c5f7dc04499372350e3405e4d747d3b0b5744"
+    "sha256": "dd89a4d68b81354dff0bbb100ad2be6708ecd51733a1e9e6e54afa02ac78ac74"
   },
   "interface": {
     "path": "skills/x/agents/openai.yaml",
