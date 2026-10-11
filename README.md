@@ -63,13 +63,13 @@ agent following the skill.
   Codex skill exercise is recorded below. Claude execution
   was rejected by its session rate limit; live GitHub
   installs remain unverified.
-- Before this release the suite was run on macOS, on
-  Python 3.11, 3.12 and 3.13 with Node 26, and on Linux in a
+- Before this release the suite was run on macOS, on Python
+  3.11, 3.12 and 3.13 with Node 26, and on Linux in a
   container, on Python 3.12 and 3.13 with Node 24. It was
   not run on Windows.
-- On Windows a `bash` handler is sent through WSL. The
-  tests check the command line x builds for that and do not
-  start WSL.
+- On Windows a `bash` handler is sent through WSL. The tests
+  check the command line x builds for that and do not start
+  WSL.
 - `engines` in `package.json` says Node 18 or newer. The
   launcher was run on Node 24 and 26. Its path for Node
   versions that cannot replace the running process is tested
@@ -119,13 +119,13 @@ things, point it at a script that does them.
 
 A command needs a `description` and one handler:
 
-| Handler   | Runs                                                  |
-| --------- | ----------------------------------------------------- |
-| `run`     | An argv, exactly as written.                          |
-| `bash`    | A script, with optional `args`. On Windows, via WSL.  |
-| `npx`     | An argv after `npx`.                                  |
-| `bazel`   | An argv after Bazelisk.                               |
-| `builtin` | One of x's own commands, under your name for it.      |
+| Handler   | Runs                                                 |
+| --------- | ---------------------------------------------------- |
+| `run`     | An argv, exactly as written.                         |
+| `bash`    | A script, with optional `args`. On Windows, via WSL. |
+| `npx`     | An argv after `npx`.                                 |
+| `bazel`   | An argv after Bazelisk.                              |
+| `builtin` | One of x's own commands, under your name for it.     |
 
 ```toml
 [commands.deploy]
@@ -211,14 +211,14 @@ not overwrite a Makefile it did not generate unless you pass
 
 ## Built-in commands
 
-| Command    | Does                                              |
-| ---------- | ------------------------------------------------- |
-| `help`     | Lists commands. `--json` for tools.               |
-| `version`  | Prints the running version.                       |
-| `check`    | Validates the `x.toml` files and the Makefile.    |
-| `init`     | Writes a starter `x.toml`. Never overwrites.      |
-| `makefile` | Writes the Makefile, or compares with `--check`.  |
-| `resume`   | Resumes a coding-agent session by id.             |
+| Command    | Does                                             |
+| ---------- | ------------------------------------------------ |
+| `help`     | Lists commands. `--json` for tools.              |
+| `version`  | Prints the running version.                      |
+| `check`    | Validates the `x.toml` files and the Makefile.   |
+| `init`     | Writes a starter `x.toml`. Never overwrites.     |
+| `makefile` | Writes the Makefile, or compares with `--check`. |
+| `resume`   | Resumes a coding-agent session by id.            |
 
 Once a repository has an `x.toml`, `help` lists its commands
 only; `help --all` adds these. A command of your own with
@@ -233,12 +233,12 @@ the code does there.
 
 - A `bash` handler runs through `wsl.exe`.
 - A program that is a `.cmd` or `.bat` file is run by
-  Windows through `cmd.exe`. That covers `npx` and `npm`,
-  so it covers the `npx` and `bazel` handlers and the
-  re-run of a pinned version. `cmd.exe` gives `&`, `|`,
-  `^` and `%NAME%` a meaning inside arguments, so on
-  Windows the statement that arguments reach the program
-  untouched does not hold for those programs.
+  Windows through `cmd.exe`. That covers `npx` and `npm`, so
+  it covers the `npx` and `bazel` handlers and the re-run of
+  a pinned version. `cmd.exe` gives `&`, `|`, `^` and
+  `%NAME%` a meaning inside arguments, so on Windows the
+  statement that arguments reach the program untouched does
+  not hold for those programs.
 
 ## Names on npm
 
@@ -270,11 +270,11 @@ the same result, stops at the first step that fails, and
 refuses to replace anything at the skill's path that it did
 not put there.
 
-The blocks were run against a local copy of this
-repository, not against GitHub. There, the first run of each
-printed one line, `warning: refs/tags/v0.1.0 … is not a
-commit!`, which is what git says when it clones at an
-annotated tag. The second run printed nothing.
+The blocks were run against a local copy of this repository,
+not against GitHub. There, the first run of each printed one
+line, `warning: refs/tags/v0.1.0 … is not a commit!`, which
+is what git says when it clones at an annotated tag. The
+second run printed nothing.
 
 To remove the skill, delete the link and the checkout the
 block names. A block for a later release refuses to replace
@@ -369,11 +369,11 @@ it, use `@x`.
 ## Evidence
 
 [`evidence/transcripts/session.txt`](evidence/transcripts/session.txt)
-is a terminal session recorded by `scripts/record_session.py`:
-eight commands, run in order in an empty throwaway folder.
-The script wrote each line that starts with `$ `, which is
-the command it ran. Every other line is what that command
-printed. Nothing was edited.
+is a terminal session recorded by
+`scripts/record_session.py`: eight commands, run in order in
+an empty throwaway folder. The script wrote each line that
+starts with `$ `, which is the command it ran. Every other
+line is what that command printed. Nothing was edited.
 
 [`evidence/demo-manifest.json`](evidence/demo-manifest.json)
 lists the commands, the date, the Python and Node versions,
@@ -381,8 +381,8 @@ and the SHA-256 of the transcript, of the skill, and of
 every file of the tool. It also records that no agent
 invoked the skill.
 
-`assets/demo.svg` and `assets/poster.svg` are generated
-from the transcript by `scripts/generate_demo.py`, and
+`assets/demo.svg` and `assets/poster.svg` are generated from
+the transcript by `scripts/generate_demo.py`, and
 `scripts/verify_demo.py` checks them against it.
 
 The test suite holds these together. It recomputes every
@@ -392,31 +392,33 @@ both images, and checks the social preview against its
 stamp.
 
 This scripted demo records the tool on the machine that
-recorded it. The separate agent exercise below records
-Codex following `SKILL.md`.
+recorded it. The separate agent exercise below records Codex
+following `SKILL.md`.
 
 ### Actual agent exercise
 
-The fixtures in `evidence/fixtures/` are synthetic. Codex CLI
-0.162.1 read the skill, discovered the pinned commands, ran
-`hello "two words"`, added `greet`, regenerated the Makefile
-through x, ran `greet friend` directly and through Make,
-and checked configuration and Makefile freshness. The
+The fixtures in `evidence/fixtures/` are synthetic. Codex
+CLI 0.162.1 read the skill, discovered the pinned commands,
+ran `hello "two words"`, added `greet`, regenerated the
+Makefile through x, ran `greet friend` directly and through
+Make, and checked configuration and Makefile freshness. The
 local launcher was `node bin/x.js`; no npm publication was
 needed. A second `$x` invocation used repository skill
-discovery and ran the same checks without editing files.
-A third `@x` invocation used a locally installed marketplace
+discovery and ran the same checks without editing files. A
+third `@x` invocation used a locally installed marketplace
 plugin and repeated command discovery, dispatch and checks.
 
 [`evidence/agent-manifest.json`](evidence/agent-manifest.json)
-binds the input commit, skill, fixture bytes and transcripts.
+binds the input commit, skill, fixture bytes and
+transcripts.
 [`codex-skill.jsonl`](evidence/transcripts/codex-skill.jsonl)
 [`codex-discovery.jsonl`](evidence/transcripts/codex-discovery.jsonl)
-and [`codex-plugin.jsonl`](evidence/transcripts/codex-plugin.jsonl)
+and
+[`codex-plugin.jsonl`](evidence/transcripts/codex-plugin.jsonl)
 are native event streams with local absolute paths replaced
 by fixture paths. They are edited transcripts; no command
-outputs or agent steps were synthesized. Raw streams and
-the ordered redaction chain are retained privately for the
+outputs or agent steps were synthesized. Raw streams and the
+ordered redaction chain are retained privately for the
 release reviewers.
 
 The evidence tests replay the recorded commands against the
