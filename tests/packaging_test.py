@@ -181,7 +181,7 @@ class ManifestTest(unittest.TestCase):
         text = _read("LICENSE")
 
         self.assertIn("MIT License", text)
-        self.assertIn("Try Copilot AI", text)
+        self.assertIn("trycopilot.ai LLC", text)
         self.assertEqual(_json("package.json")["license"], "MIT")
 
     def test_text_people_read_says_license_after_mit(self):
