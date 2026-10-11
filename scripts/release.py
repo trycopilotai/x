@@ -45,7 +45,9 @@ def _npm() -> str:
     return found
 
 
-def _run(argv: list[str], cwd: Path, *, check: bool = True) -> subprocess.CompletedProcess:
+def _run(
+    argv: list[str], cwd: Path, *, check: bool = True
+) -> subprocess.CompletedProcess:
     completed = subprocess.run(
         argv, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )

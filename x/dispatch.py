@@ -92,7 +92,9 @@ class ControlPlane:
                     raise SpecError("duplicate global flag name: " + name)
                 flag_names.add(name)
         if self.resolve(self.default_command) is None:
-            raise SpecError("the default command does not exist: " + self.default_command)
+            raise SpecError(
+                "the default command does not exist: " + self.default_command
+            )
 
     def resolve(self, requested: str) -> CommandSpec | None:
         normalized = self.normalizer(requested)

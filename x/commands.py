@@ -276,7 +276,9 @@ def _check(
                 level + "\t" + _relative(path, base) + "\t" + message + "\n"
             )
 
-        report("ok", workspace.root.path, _count(len(workspace.root.commands), "command"))
+        report(
+            "ok", workspace.root.path, _count(len(workspace.root.commands), "command")
+        )
         for folder in workspace.folders:
             report("ok", folder.path, _count(len(folder.commands), "command"))
 
@@ -573,7 +575,9 @@ def specs(
     workspace: Workspace | None, merged: Sequence[CommandConfig]
 ) -> tuple[CommandSpec, ...]:
     return (
-        CommandSpec("help", "List commands, or describe one.", _help(workspace, merged)),
+        CommandSpec(
+            "help", "List commands, or describe one.", _help(workspace, merged)
+        ),
         CommandSpec("version", "Print the running x version.", _version),
         CommandSpec(
             "check",

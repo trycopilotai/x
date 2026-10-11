@@ -214,9 +214,7 @@ class MakefileTestCase(unittest.TestCase):
 
 class RenderTest(MakefileTestCase):
     def test_declared_order_with_custom_header_and_recipes(self):
-        self.assertEqual(
-            render_makefile(self.root_config(DECLARED)), DECLARED_MAKEFILE
-        )
+        self.assertEqual(render_makefile(self.root_config(DECLARED)), DECLARED_MAKEFILE)
 
     def test_sorted_targets_with_aliases_and_selective_args(self):
         self.assertEqual(render_makefile(self.root_config(SORTED)), SORTED_MAKEFILE)

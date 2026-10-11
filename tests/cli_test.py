@@ -30,7 +30,9 @@ class HandlerTest(RepoTestCase):
         result = self.run_x("go", "space value", "雪", status=23)
 
         self.assertEqual(result.status, 23)
-        self.assertEqual(result.requests[0].argv, ("tool", "fixed", "space value", "雪"))
+        self.assertEqual(
+            result.requests[0].argv, ("tool", "fixed", "space value", "雪")
+        )
         self.assertEqual(result.requests[0].cwd, self.root)
         self.assertEqual(result.stderr, "")
 
@@ -50,7 +52,8 @@ class HandlerTest(RepoTestCase):
 
     def test_bash_goes_through_wsl_on_windows(self):
         self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nbash = "tools/go.sh"\n'
+            "x.toml",
+            ROOT + '[commands.go]\ndescription = "Go."\nbash = "tools/go.sh"\n',
         )
 
         result = self.run_x("go", "now", platform="windows")
@@ -78,11 +81,14 @@ class HandlerTest(RepoTestCase):
             return windows_to_wsl_path(str(PureWindowsPath(str(path))))[1]
 
         self.assertEqual(folder[folder.index("--cd") + 1], as_wsl(self.root / "web"))
-        self.assertEqual(relative[relative.index("--cd") + 1], as_wsl(self.root / "pkg"))
+        self.assertEqual(
+            relative[relative.index("--cd") + 1], as_wsl(self.root / "pkg")
+        )
 
     def test_npx_drops_the_flags_npm_leaks_to_children(self):
         self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nnpx = ["--yes", "pkg"]\n'
+            "x.toml",
+            ROOT + '[commands.go]\ndescription = "Go."\nnpx = ["--yes", "pkg"]\n',
         )
 
         result = self.run_x(
@@ -124,7 +130,8 @@ class HandlerTest(RepoTestCase):
     def test_unsupported_platform_is_refused_before_anything_runs(self):
         self.write(
             "x.toml",
-            ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\nplatforms = ["macos"]\n',
+            ROOT
+            + '[commands.go]\ndescription = "Go."\nrun = ["t"]\nplatforms = ["macos"]\n',
         )
 
         result = self.run_x("go")
@@ -204,7 +211,9 @@ class CannotRunTest(RepoTestCase):
     def configure(self, extra: str = "") -> None:
         self.write(
             "x.toml",
-            ROOT + '[commands.go]\ndescription = "Go."\nrun = ["tools/go.sh"]\n' + extra,
+            ROOT
+            + '[commands.go]\ndescription = "Go."\nrun = ["tools/go.sh"]\n'
+            + extra,
         )
 
     def script(self, text: str, mode: int = 0o755) -> Path:
@@ -270,7 +279,8 @@ class CannotRunTest(RepoTestCase):
     def test_an_argument_no_process_can_be_given(self):
         self.write(
             "x.toml",
-            ROOT + '[commands.go]\ndescription = "Go."\nrun = ["sh", "-c", "exit 0", "a\\u0000b"]\n',
+            ROOT
+            + '[commands.go]\ndescription = "Go."\nrun = ["sh", "-c", "exit 0", "a\\u0000b"]\n',
         )
 
         result = self.run_real("go")
@@ -359,9 +369,7 @@ class DelegateTest(RepoTestCase):
         self.assertEqual(result.stderr, "")
 
     def test_without_an_unknown_table_an_undeclared_command_is_an_error(self):
-        self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n'
-        )
+        self.write("x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n')
 
         result = self.run_x("nope")
 
@@ -437,7 +445,9 @@ class FolderTest(RepoTestCase):
         # Inside one file it is a mistake, and the file is named.
         self.assertEqual(result.status, 2)
         self.assertIn("web/x.toml", result.stderr.replace(os.sep, "/"))
-        self.assertIn("the name 'build' is claimed by both build and dev", result.stderr)
+        self.assertIn(
+            "the name 'build' is claimed by both build and dev", result.stderr
+        )
         self.assertEqual(self.run_x("help").status, 0)
 
     def test_folder_commands_do_not_exist_outside_their_folder(self):
@@ -486,7 +496,8 @@ class BuiltinTest(RepoTestCase):
 
         self.assertEqual(self.run_x("help").stdout, "go\tGo.\n")
         listed = [
-            line.split("\t")[0] for line in self.run_x("help", "--all").stdout.splitlines()
+            line.split("\t")[0]
+            for line in self.run_x("help", "--all").stdout.splitlines()
         ]
         self.assertEqual(
             listed,
@@ -496,7 +507,8 @@ class BuiltinTest(RepoTestCase):
 
     def test_help_for_one_command_and_for_a_missing_one(self):
         self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\naliases = ["g"]\n'
+            "x.toml",
+            ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\naliases = ["g"]\n',
         )
 
         self.assertEqual(self.run_x("help", "g").stdout, "go\tGo.\n")
@@ -511,7 +523,9 @@ class BuiltinTest(RepoTestCase):
             + '[commands.go]\ndescription = "Go."\nrun = ["t"]\naliases = ["g"]\n'
             + "[make]\n",
         )
-        self.write("sub/x.toml", '[commands.local]\ndescription = "L."\nbash = "l.sh"\n')
+        self.write(
+            "sub/x.toml", '[commands.local]\ndescription = "L."\nbash = "l.sh"\n'
+        )
 
         document = json.loads(self.run_x("help", "--json", cwd="sub").stdout)
 
@@ -532,9 +546,7 @@ class BuiltinTest(RepoTestCase):
         self.assertFalse(by_name["go"]["builtin"])
 
     def test_help_json_gives_every_entry_the_same_keys(self):
-        self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n'
-        )
+        self.write("x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n')
 
         document = json.loads(self.run_x("help", "--json").stdout)
 
@@ -549,7 +561,8 @@ class BuiltinTest(RepoTestCase):
 
     def test_repository_command_wins_over_a_builtin_of_the_same_name(self):
         self.write(
-            "x.toml", ROOT + '[commands.help]\ndescription = "Ours."\nrun = ["our-help"]\n'
+            "x.toml",
+            ROOT + '[commands.help]\ndescription = "Ours."\nrun = ["our-help"]\n',
         )
 
         self.assertEqual(self.run_x("help").requests[0].argv, ("our-help",))
@@ -560,7 +573,8 @@ class BuiltinTest(RepoTestCase):
     def test_builtin_handler_lets_a_repository_list_a_builtin_as_its_own(self):
         self.write(
             "x.toml",
-            ROOT + '[commands.about]\ndescription = "Engine version."\nbuiltin = "version"\n',
+            ROOT
+            + '[commands.about]\ndescription = "Engine version."\nbuiltin = "version"\n',
         )
 
         self.assertEqual(self.run_x("about").stdout, __version__ + "\n")
@@ -607,7 +621,9 @@ class BuiltinTest(RepoTestCase):
         self.assertEqual(result.status, 2)
         self.assertEqual(
             result.stderr,
-            "x: " + str(self.root / "x.toml") + ": the name 'c' is claimed by both a and c\n",
+            "x: "
+            + str(self.root / "x.toml")
+            + ": the name 'c' is claimed by both a and c\n",
         )
 
         self.write(
@@ -619,7 +635,9 @@ class BuiltinTest(RepoTestCase):
         self.assertEqual(missing.status, 2)
         self.assertEqual(
             missing.stderr,
-            "x: " + str(self.root / "x.toml") + ": the default command does not exist: nothere\n",
+            "x: "
+            + str(self.root / "x.toml")
+            + ": the default command does not exist: nothere\n",
         )
 
     def test_config_errors_exit_two_with_one_line(self):
@@ -692,7 +710,15 @@ class RootFlagTest(RepoTestCase):
 
         self.assertEqual(
             result.requests[0].argv,
-            ("npx", "--yes", "@tryc.ai/x@9.9.9", "--pinned", "--root", str(self.root), "go"),
+            (
+                "npx",
+                "--yes",
+                "@tryc.ai/x@9.9.9",
+                "--pinned",
+                "--root",
+                str(self.root),
+                "go",
+            ),
         )
 
 
@@ -798,7 +824,9 @@ class MakefileCommandTest(RepoTestCase):
                     "x: a command named 'a:b' cannot be a Make target; "
                     "rename it or set make = false\n",
                 )
-        self.assertIn("error\tMakefile\ta command named 'a:b'", self.run_x("check").stdout)
+        self.assertIn(
+            "error\tMakefile\ta command named 'a:b'", self.run_x("check").stdout
+        )
 
     def test_a_makefile_path_that_is_a_folder_is_refused_and_leaves_nothing(self):
         self.write(
@@ -834,9 +862,7 @@ class MakefileCommandTest(RepoTestCase):
         self.assertEqual(result.stderr.count("\n"), 1)
 
     def test_it_needs_a_make_table(self):
-        self.write(
-            "x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n'
-        )
+        self.write("x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n')
 
         result = self.run_x("makefile")
 
@@ -889,7 +915,9 @@ class CheckAndInitTest(RepoTestCase):
 
     def test_check_notes_a_folder_command_that_replaces_a_root_one(self):
         self.write("x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n')
-        self.write("sub/x.toml", '[commands.go]\ndescription = "Local go."\nrun = ["u"]\n')
+        self.write(
+            "sub/x.toml", '[commands.go]\ndescription = "Local go."\nrun = ["u"]\n'
+        )
 
         result = self.run_x("check", cwd="sub")
 
@@ -910,7 +938,9 @@ class CheckAndInitTest(RepoTestCase):
 
         result = self.run_x("check", cwd="sub")
 
-        self.assertIn("note\tsub/x.toml\tship replaces deploy from x.toml\n", result.stdout)
+        self.assertIn(
+            "note\tsub/x.toml\tship replaces deploy from x.toml\n", result.stdout
+        )
         self.assertIn(
             "note\tsub/x.toml\tship takes the alias t from test in x.toml\n",
             result.stdout,
@@ -918,7 +948,9 @@ class CheckAndInitTest(RepoTestCase):
 
     def test_check_from_the_root_does_not_see_a_folders_replacements(self):
         self.write("x.toml", ROOT + '[commands.go]\ndescription = "Go."\nrun = ["t"]\n')
-        self.write("sub/x.toml", '[commands.go]\ndescription = "Local go."\nrun = ["u"]\n')
+        self.write(
+            "sub/x.toml", '[commands.go]\ndescription = "Local go."\nrun = ["u"]\n'
+        )
 
         self.assertNotIn("note\t", self.run_x("check").stdout)
 
@@ -928,7 +960,9 @@ class CheckAndInitTest(RepoTestCase):
         self.assertEqual(result.status, 1)
         self.assertEqual(
             result.stderr,
-            "x: no x.toml applies in " + str(self.root) + "; run `init` to create one\n",
+            "x: no x.toml applies in "
+            + str(self.root)
+            + "; run `init` to create one\n",
         )
 
     @unittest.skipUnless(shutil.which("git"), "git is not installed")
@@ -939,7 +973,9 @@ class CheckAndInitTest(RepoTestCase):
         self.write("web/x.toml", '[commands.serve]\ndescription = "Serve."\n')
         self.write("api/x.toml", '[commands.up]\ndescription = "Up."\nrun = ["u"]\n')
         for argv in (["init", "-q"], ["add", "x.toml", "web/x.toml", "api/x.toml"]):
-            subprocess.run(["git", *argv], cwd=self.root, check=True, capture_output=True)
+            subprocess.run(
+                ["git", *argv], cwd=self.root, check=True, capture_output=True
+            )
 
         result = self.run_x("check")
 

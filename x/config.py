@@ -472,8 +472,12 @@ def resume_grammar(agents: tuple[ResumeAgentConfig, ...]) -> sessions.Grammar:
             owner = aliases.get(folded)
             if owner is not None and owner != agent.agent:
                 raise sessions.ResumeError(
-                    "agent name '" + folded + "' belongs to " + owner
-                    + " and " + agent.agent
+                    "agent name '"
+                    + folded
+                    + "' belongs to "
+                    + owner
+                    + " and "
+                    + agent.agent
                 )
             aliases[folded] = agent.agent
     return sessions.grammar(
@@ -511,9 +515,7 @@ def _resume(path: Path, table: Any) -> tuple[ResumeAgentConfig, ...]:
         if command is not None:
             present = [kind for kind in HANDLER_KINDS if child.has(kind)]
             if present:
-                raise child.error(
-                    "needs exactly one of run, npx, bazel, bash, command"
-                )
+                raise child.error("needs exactly one of run, npx, bazel, bash, command")
             arguments = child.strings("args") or ()
         else:
             handler = _handler(child, builtin=False)
@@ -661,8 +663,7 @@ def find_files(start: Path) -> tuple[tuple[Path, dict[str, Any]], ...]:
 
     if found and not rooted:
         message = (
-            str(found[0][0])
-            + ": has no [x] table, and no root x.toml applies above it"
+            str(found[0][0]) + ": has no [x] table, and no root x.toml applies above it"
         )
         if in_repository:
             message += " in this repository; one file must be the root"

@@ -14,9 +14,9 @@ description: >-
 # x
 
 `x` gives a repository one list of commands. The list lives
-in `x.toml`. People run a command as `x <command>`, `make
-<command>` runs the same thing through a generated Makefile,
-and you read the same list as JSON.
+in `x.toml`. People run a command as `x <command>`,
+`make <command>` runs the same thing through a generated
+Makefile, and you read the same list as JSON.
 
 Requirements: Node 18 or newer and Python 3.11 or newer.
 Nothing needs installing first; `npx` fetches the package.
@@ -49,8 +49,8 @@ Trust this output over reading the Makefile or the scripts.
 `name`, `description`, `aliases`, `platforms`, `hidden`,
 `builtin`, `kind`, `cwd`, `source` and `make`:
 
-- `builtin` is `true` for x's own commands. The
-  repository's commands are the entries where it is `false`.
+- `builtin` is `true` for x's own commands. The repository's
+  commands are the entries where it is `false`.
 - `source` is the `x.toml` that declares the command,
   relative to the root.
 - `kind` is the handler type and `cwd` is the working
@@ -71,8 +71,8 @@ and `resume`.
 <x> <command> [arguments]
 ```
 
-- Run it from the folder the task concerns. A folder can
-  add or replace commands for itself and everything below.
+- Run it from the folder the task concerns. A folder can add
+  or replace commands for itself and everything below.
 - Arguments after the command name are passed through
   unchanged. Prefer `<x> <command> args` over
   `make <command> ARGS="args"` when passing arguments.
@@ -83,9 +83,9 @@ and `resume`.
     message on stderr names the file.
   - `126`: the program is there but could not be run, for
     example a script that is not executable.
-  - `127`: a program or working directory was not found,
-    the command does not support this platform, or no
-    usable Python was found.
+  - `127`: a program or working directory was not found, the
+    command does not support this platform, or no usable
+    Python was found.
 
 ## 4. Add or change a command
 
@@ -116,6 +116,7 @@ and `resume`.
    table of variables to set), `hidden` (leave it out of
    `help`), and `make` (`false` to keep it out of the
    Makefile).
+
 4. If the root file has a `[make]` table, regenerate the
    Makefile, then validate. Run both from the folder whose
    `x.toml` you edited:
@@ -126,6 +127,7 @@ and `resume`.
    ```
 
    Without a `[make]` table, run `check` alone.
+
 5. When the change is committed, `x.toml` and the Makefile
    go in the same commit.
 
@@ -158,11 +160,10 @@ npx --yes @tryc.ai/x@0.1.0 --builtin init
 Run it in the repository's top folder. It writes a starter
 root file there with one command, `hello`. Replace `hello`
 with a few of the repository's real commands, run `check`,
-and stop there.
-Add a `[make]` table only when the repository has no
-hand-written Makefile, or the user agrees to replace it;
-`makefile` refuses to overwrite a Makefile it did not
-generate unless given `--force`.
+and stop there. Add a `[make]` table only when the
+repository has no hand-written Makefile, or the user agrees
+to replace it; `makefile` refuses to overwrite a Makefile it
+did not generate unless given `--force`.
 
 ## 7. Trust
 

@@ -623,9 +623,7 @@ def find_session(
         raise ResumeError(message)
     agents = sorted({session.agent for session in matches})
     if len(agents) > 1:
-        raise ResumeError(
-            "session id " + session_id + " matches " + ", ".join(agents)
-        )
+        raise ResumeError("session id " + session_id + " matches " + ", ".join(agents))
     return _with_cwd(matches[0])
 
 
@@ -699,9 +697,7 @@ def resume_plan(
 
     if is_latest:
         if request.agent is None:
-            raise ResumeError(
-                "'" + LATEST + "' needs an agent; pass CLAUDE=" + LATEST
-            )
+            raise ResumeError("'" + LATEST + "' needs an agent; pass CLAUDE=" + LATEST)
         session = latest_session(request.agent, home, root)
     elif request.agent is None:
         session = find_session(request.session_id, home, selected)

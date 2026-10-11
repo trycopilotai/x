@@ -6,7 +6,19 @@ version = "0.1.0"
 
 [commands.test]
 description = "Run the test suite."
-run = ["{python}", "-B", "-m", "unittest", "discover", "-s", "tests", "-t", ".", "-p", "*_test.py"]
+run = [
+  "{python}",
+  "-B",
+  "-m",
+  "unittest",
+  "discover",
+  "-s",
+  "tests",
+  "-t",
+  ".",
+  "-p",
+  "*_test.py",
+]
 
 [commands.pack]
 description = "List the files the npm package would ship."

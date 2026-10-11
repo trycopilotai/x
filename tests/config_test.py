@@ -58,7 +58,9 @@ class RootFileTest(ConfigTestCase):
         self.assert_rejected('[x]\nversion = "latest"\n', "must be an exact version")
 
     def test_unknown_keys_are_errors_at_every_level(self):
-        self.assert_rejected("surprise = 1\n" + ROOT, "top level: unknown key 'surprise'")
+        self.assert_rejected(
+            "surprise = 1\n" + ROOT, "top level: unknown key 'surprise'"
+        )
         self.assert_rejected(
             '[x]\nversion = "0.1.0"\ncolour = "red"\n', r"\[x\]: unknown key 'colour'"
         )
@@ -75,7 +77,8 @@ class RootFileTest(ConfigTestCase):
             r"\[unknown\]: unknown key 'quiet'",
         )
         self.assert_rejected(
-            ROOT + '[resume]\ndefault = "claude"\n', r"\[resume\]: unknown key 'default'"
+            ROOT + '[resume]\ndefault = "claude"\n',
+            r"\[resume\]: unknown key 'default'",
         )
         self.assert_rejected(
             ROOT + '[resume.agents.claude]\nrun = ["a"]\nmodel = "m"\n',
@@ -196,7 +199,8 @@ class CommandTest(ConfigTestCase):
 
     def test_platform_table_needs_a_handler_and_cannot_be_a_builtin(self):
         self.assert_rejected(
-            ROOT + '[commands.a]\ndescription = "A."\nrun = ["a"]\n[commands.a.linux]\n',
+            ROOT
+            + '[commands.a]\ndescription = "A."\nrun = ["a"]\n[commands.a.linux]\n',
             "needs one of run, bash, npx, bazel",
         )
         self.assert_rejected(
@@ -208,14 +212,22 @@ class CommandTest(ConfigTestCase):
 
     def test_unknown_platform_is_rejected(self):
         self.assert_rejected(
-            ROOT + '[commands.a]\ndescription = "A."\nrun = ["a"]\nplatforms = ["bsd"]\n',
+            ROOT
+            + '[commands.a]\ndescription = "A."\nrun = ["a"]\nplatforms = ["bsd"]\n',
             "unknown platform 'bsd'",
         )
 
     def test_cwd_must_stay_relative_on_every_host(self):
         # Judged by the text, not by the host's own idea of an
         # absolute path, so one file loads the same everywhere.
-        for value in ("/etc", "\\\\server\\share", "C:\\work", "C:/work", "C:work", "\\work"):
+        for value in (
+            "/etc",
+            "\\\\server\\share",
+            "C:\\work",
+            "C:/work",
+            "C:work",
+            "\\work",
+        ):
             with self.subTest(value):
                 self.assert_rejected(
                     ROOT
@@ -275,7 +287,9 @@ class RootTablesTest(ConfigTestCase):
         )
 
     def test_defaults_needs_a_handler(self):
-        self.assert_rejected(ROOT + "[defaults]\n", "needs one of run, bash, npx, bazel")
+        self.assert_rejected(
+            ROOT + "[defaults]\n", "needs one of run, bash, npx, bazel"
+        )
 
     def test_header_replaces_launcher_and_default(self):
         self.assert_rejected(
@@ -284,7 +298,12 @@ class RootTablesTest(ConfigTestCase):
         )
 
     def test_make_path_must_stay_inside_the_root(self):
-        for value in ("/tmp/Makefile", "C:\\Makefile", "../Makefile", "build/../../Makefile"):
+        for value in (
+            "/tmp/Makefile",
+            "C:\\Makefile",
+            "../Makefile",
+            "build/../../Makefile",
+        ):
             with self.subTest(value):
                 self.assert_rejected(
                     ROOT + "[make]\npath = " + json.dumps(value) + "\n",
@@ -307,9 +326,7 @@ class RootTablesTest(ConfigTestCase):
         self.assertFalse(agents["claude"].custom)
         self.assertEqual(agents["codex"].command, "codex")
         self.assertEqual(agents["codex"].args, ("{cwd}",))
-        self.assert_rejected(
-            ROOT + "[resume.agents.claude]\n", "needs exactly one of"
-        )
+        self.assert_rejected(ROOT + "[resume.agents.claude]\n", "needs exactly one of")
         self.assert_rejected(
             ROOT + '[resume.agents.claude]\nrun = ["a"]\ncommand = "b"\n',
             "needs exactly one of",
@@ -397,10 +414,13 @@ class FolderFileTest(ConfigTestCase):
         (self.outside / "x.toml").write_bytes(ROOT.encode("utf-8"))
         plain = self.outside / "plain"
         plain.mkdir()
-        (plain / "x.toml").write_bytes(b'[commands.one]\ndescription = "1."\nrun = ["1"]\n')
+        (plain / "x.toml").write_bytes(
+            b'[commands.one]\ndescription = "1."\nrun = ["1"]\n'
+        )
 
         with self.assertRaisesRegex(
-            ConfigError, "this folder is in no Git repository, so files in the folders above"
+            ConfigError,
+            "this folder is in no Git repository, so files in the folders above",
         ):
             load_workspace(plain)
 

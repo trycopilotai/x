@@ -56,8 +56,7 @@ class ManifestTest(unittest.TestCase):
                 self.assertEqual(
                     entry["sha256"],
                     _sha256(entry["path"]),
-                    entry["path"]
-                    + " changed after the evidence was recorded; run "
+                    entry["path"] + " changed after the evidence was recorded; run "
                     "`make record` and then `make demo`, and commit the result",
                 )
 
@@ -159,7 +158,9 @@ class ImageTest(unittest.TestCase):
 
     def test_social_preview_is_the_stamped_render_at_githubs_size(self):
         recorded = {}
-        for line in (ROOT / "assets" / "social-preview.sha256").read_text().splitlines():
+        for line in (
+            (ROOT / "assets" / "social-preview.sha256").read_text().splitlines()
+        ):
             if line.strip():
                 value, name = line.split()
                 recorded[name] = value

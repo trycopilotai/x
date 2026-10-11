@@ -304,7 +304,14 @@ class InterpreterDiscoveryTest(LauncherTestCase):
 
         self.assertEqual(
             commands,
-            ["python3", "python3.13", "python3.12", "python3.11", "python3.14", "python"],
+            [
+                "python3",
+                "python3.13",
+                "python3.12",
+                "python3.11",
+                "python3.14",
+                "python",
+            ],
         )
 
     def test_windows_candidates_start_with_the_py_launcher(self):
@@ -355,9 +362,7 @@ class InterpreterDiscoveryTest(LauncherTestCase):
         completed = self.launch("--version", env=self.environment(X_PYTHON=str(stub)))
 
         self.assertEqual(completed.returncode, 127)
-        self.assertIn(
-            str(stub) + " (3.9.6 at /somewhere/old-python)", completed.stderr
-        )
+        self.assertIn(str(stub) + " (3.9.6 at /somewhere/old-python)", completed.stderr)
 
 
 if __name__ == "__main__":

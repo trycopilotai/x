@@ -60,9 +60,7 @@ def digest(path):
 
 
 def stamp_text():
-    return "".join(
-        f"{digest(path)}  {path.name}\n" for path in (SOURCE, TARGET)
-    )
+    return "".join(f"{digest(path)}  {path.name}\n" for path in (SOURCE, TARGET))
 
 
 def read_stamp():
@@ -82,9 +80,7 @@ def check_stamp():
     recorded = read_stamp()
     for path in (SOURCE, TARGET):
         if recorded.get(path.name) != digest(path):
-            raise SystemExit(
-                f"{path.name} does not match {STAMP.name}. Re-render."
-            )
+            raise SystemExit(f"{path.name} does not match {STAMP.name}. Re-render.")
 
 
 def find_chrome():
@@ -165,8 +161,7 @@ def main():
         size = png_size(TARGET)
         if size != (WIDTH, HEIGHT):
             raise SystemExit(
-                f"{TARGET.name} is {size[0]}x{size[1]}, "
-                f"expected {WIDTH}x{HEIGHT}"
+                f"{TARGET.name} is {size[0]}x{size[1]}, " f"expected {WIDTH}x{HEIGHT}"
             )
         print(f"social-preview.png OK ({WIDTH}x{HEIGHT})")
         return
@@ -174,8 +169,7 @@ def main():
     chrome = find_chrome()
     if chrome is None:
         raise SystemExit(
-            "no Chrome or Chromium found; install one to rebuild "
-            "the social preview"
+            "no Chrome or Chromium found; install one to rebuild " "the social preview"
         )
     render(chrome)
     size = png_size(TARGET)

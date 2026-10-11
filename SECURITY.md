@@ -28,9 +28,8 @@ Three things follow from that and are easy to miss:
 
 `x --builtin help` and `x --builtin help --json` read the
 files and start none of the repository's programs. If the
-root file pins a version other than the one running, x
-first starts `npx` to fetch the pinned x, as described
-below.
+root file pins a version other than the one running, x first
+starts `npx` to fetch the pinned x, as described below.
 
 Within that:
 
@@ -42,8 +41,8 @@ Within that:
   a `.cmd` or `.bat` file through `cmd.exe`, which gives
   `&`, `|`, `^` and `%NAME%` a meaning inside arguments.
   `npx` and `npm` are such files, so this covers the `npx`
-  and `bazel` handlers and the re-run of a pinned version.
-  x does not escape arguments for `cmd.exe`.
+  and `bazel` handlers and the re-run of a pinned version. x
+  does not escape arguments for `cmd.exe`.
 - **`make` uses a shell.** A generated Makefile recipe is
   run by `make` through a shell, as every recipe is, and
   arguments passed as `ARGS=` are expanded by that shell.
@@ -60,11 +59,11 @@ Within that:
   `x.toml` files Git tracks below the root.
 - **Programs x starts for itself.** Apart from the handlers:
   `git ls-files`, during `check`, to find those tracked
-  files; and `npx --yes @tryc.ai/x@<version>` when `[x]
-  version` names a different version than the one running.
-  The version must be an exact version number; a range, a
-  tag or another package name does not load. `npx` uses the
-  network when that version is not in its cache.
+  files; and `npx --yes @tryc.ai/x@<version>` when
+  `[x] version` names a different version than the one
+  running. The version must be an exact version number; a
+  range, a tag or another package name does not load. `npx`
+  uses the network when that version is not in its cache.
 - **Bazelisk is not pinned.** A `bazel` handler runs
   `npx --yes @bazel/bazelisk`, which fetches whichever
   Bazelisk version `npx` resolves.
@@ -96,13 +95,12 @@ package that command asked for.
 None of these scripts is in the npm package, which holds the
 tool, `docs/reference.md`, the README and the license.
 
-- `scripts/record_session.py` runs the eight commands
-  listed in `evidence/demo-manifest.json`, each through
-  `sh -c`, in a temporary folder it removes afterwards.
-  Those commands run x, which starts `node` and Python, and
-  `make` and `tail`. When every command exits 0 it rewrites
-  the transcript and the manifest; otherwise it writes
-  neither.
+- `scripts/record_session.py` runs the eight commands listed
+  in `evidence/demo-manifest.json`, each through `sh -c`, in
+  a temporary folder it removes afterwards. Those commands
+  run x, which starts `node` and Python, and `make` and
+  `tail`. When every command exits 0 it rewrites the
+  transcript and the manifest; otherwise it writes neither.
 - `scripts/generate_demo.py` writes `assets/demo.svg` and
   `assets/poster.svg`, or neither with `--check`.
   `scripts/verify_demo.py` writes nothing.
@@ -115,17 +113,17 @@ tool, `docs/reference.md`, the README and the license.
   `git rev-parse` and `npm pack`, and writes `dist/`.
   `scripts/release.py publish` also runs `git describe`,
   `npm whoami`, `npm view` and `npm publish`; the npm
-  commands use the network and the npm login of whoever
-  runs it. Unless given `--allow-untagged`, it refuses to
-  publish when `dist/` was not packed from a clean tree at
-  the commit the version's tag points to.
+  commands use the network and the npm login of whoever runs
+  it. Unless given `--allow-untagged`, it refuses to publish
+  when `dist/` was not packed from a clean tree at the
+  commit the version's tag points to.
 - The tests create temporary folders and remove them. Some
   start `node`, Python, `sh`, `make -n`,
   `npm pack --dry-run` and `git`, and one runs the recorded
-  session again. No test opens a
-  network connection itself; what `npm` does when it is
-  started is npm's own behaviour. Running them can leave
-  Python's `__pycache__` folders in the checkout.
+  session again. No test opens a network connection itself;
+  what `npm` does when it is started is npm's own behaviour.
+  Running them can leave Python's `__pycache__` folders in
+  the checkout.
 - The CI workflow pins each action to a commit and uses no
   secret.
 

@@ -298,7 +298,9 @@ class ExecutionTest(unittest.TestCase):
                 context = _context(Path.cwd(), runner=runner)
                 plane = ControlPlane(
                     commands=(
-                        CommandSpec("run", "Run.", executable_handler(("tools/go.sh",))),
+                        CommandSpec(
+                            "run", "Run.", executable_handler(("tools/go.sh",))
+                        ),
                     ),
                     default_command="run",
                 )
@@ -408,7 +410,8 @@ class WindowsPathTest(unittest.TestCase):
 
         self.assertEqual(at_root.argv[:3], ("wsl.exe", "--cd", "/mnt/c/work/repo"))
         self.assertEqual(
-            in_folder.argv, ("wsl.exe", "--cd", "/mnt/c/work/repo/web", "--exec", "bash", "go.sh", "a")
+            in_folder.argv,
+            ("wsl.exe", "--cd", "/mnt/c/work/repo/web", "--exec", "bash", "go.sh", "a"),
         )
 
     def test_windows_path_conversion(self):

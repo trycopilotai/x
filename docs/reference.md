@@ -35,17 +35,17 @@ instead; see [Command line](#command-line).
 
 ## `[x]`
 
-| Key          | Type             | Default                  | Meaning                                                          |
-| ------------ | ---------------- | ------------------------ | ---------------------------------------------------------------- |
-| `version`    | string, required | none                     | The exact x version this repository uses, such as `"0.1.0"`.    |
-| `naming`     | string           | `"exact"`                | How command names are matched: `exact`, `kebab` or `snake`.      |
-| `default`    | string           | `"help"`                 | The command run when none is given.                              |
-| `caller_env` | array of strings | `["X_CALLER_DIRECTORY"]` | Environment variables set to the folder x was started from.      |
+| Key          | Type             | Default                  | Meaning                                                      |
+| ------------ | ---------------- | ------------------------ | ------------------------------------------------------------ |
+| `version`    | string, required | none                     | The exact x version this repository uses, such as `"0.1.0"`. |
+| `naming`     | string           | `"exact"`                | How command names are matched: `exact`, `kebab` or `snake`.  |
+| `default`    | string           | `"help"`                 | The command run when none is given.                          |
+| `caller_env` | array of strings | `["X_CALLER_DIRECTORY"]` | Environment variables set to the folder x was started from.  |
 
 When the running x is not the pinned version, x starts the
-pinned one with `npx --yes @tryc.ai/x@<version>` and the same
-arguments, once. `--version` reports the running version
-without reading any `x.toml`.
+pinned one with `npx --yes @tryc.ai/x@<version>` and the
+same arguments, once. `--version` reports the running
+version without reading any `x.toml`.
 
 ### Naming
 
@@ -88,28 +88,28 @@ run = ["tools/build.sh", "{flags}"]
 Quote a name TOML would not accept bare, such as
 `[commands."v2.migrate"]`.
 
-| Key           | Type             | Default    | Meaning                                                         |
-| ------------- | ---------------- | ---------- | --------------------------------------------------------------- |
-| `description` | string, required | none       | One line, shown by `help`.                                      |
-| `aliases`     | array of strings | `[]`       | Other names for the command.                                    |
-| `platforms`   | array of strings | all        | Any of `linux`, `macos`, `windows`. Elsewhere it exits 127.     |
-| `hidden`      | boolean          | `false`    | Runs normally but is left out of `help`.                        |
-| `cwd`         | string           | `"config"` | Working directory; see below.                                   |
-| `env`         | table            | `{}`       | Environment variables to set. Values may use placeholders.      |
-| `unset_env`   | array of strings | `[]`       | Environment variables to remove.                                |
-| `make`        | boolean or table | `true`     | Makefile behaviour; see below.                                  |
+| Key           | Type             | Default    | Meaning                                                     |
+| ------------- | ---------------- | ---------- | ----------------------------------------------------------- |
+| `description` | string, required | none       | One line, shown by `help`.                                  |
+| `aliases`     | array of strings | `[]`       | Other names for the command.                                |
+| `platforms`   | array of strings | all        | Any of `linux`, `macos`, `windows`. Elsewhere it exits 127. |
+| `hidden`      | boolean          | `false`    | Runs normally but is left out of `help`.                    |
+| `cwd`         | string           | `"config"` | Working directory; see below.                               |
+| `env`         | table            | `{}`       | Environment variables to set. Values may use placeholders.  |
+| `unset_env`   | array of strings | `[]`       | Environment variables to remove.                            |
+| `make`        | boolean or table | `true`     | Makefile behaviour; see below.                              |
 
 ### Handlers
 
 Each command has exactly one handler. The arguments typed
 after the command name are appended to it.
 
-| Key       | Value                                    | Runs                                                   |
-| --------- | ---------------------------------------- | ------------------------------------------------------ |
-| `run`     | array of strings                         | That argv.                                             |
-| `bash`    | script path; `args`, an array of strings | `bash <script> <args>`. On Windows, through WSL.       |
-| `npx`     | array of strings                         | `npx` followed by that argv.                           |
-| `bazel`   | array of strings                         | `npx --yes @bazel/bazelisk` followed by that argv.     |
+| Key       | Value                                    | Runs                                                                |
+| --------- | ---------------------------------------- | ------------------------------------------------------------------- |
+| `run`     | array of strings                         | That argv.                                                          |
+| `bash`    | script path; `args`, an array of strings | `bash <script> <args>`. On Windows, through WSL.                    |
+| `npx`     | array of strings                         | `npx` followed by that argv.                                        |
+| `bazel`   | array of strings                         | `npx --yes @bazel/bazelisk` followed by that argv.                  |
 | `builtin` | name of a built-in                       | x's own `help`, `version`, `check`, `init`, `makefile` or `resume`. |
 
 A command with no handler uses `[defaults]`. With no
@@ -123,9 +123,8 @@ some characters in arguments a meaning.
 
 A `run` program written with a `/` must be an executable
 file. A script needs a `#!` first line naming an interpreter
-that exists. x reports a program that is there but cannot
-be run in one line and exits 126; one that is not there,
-127.
+that exists. x reports a program that is there but cannot be
+run in one line and exits 126; one that is not there, 127.
 
 x does not choose a Bazelisk version: `bazel` runs whichever
 one `npx --yes` resolves.
@@ -134,12 +133,12 @@ one `npx --yes` resolves.
 
 Inside `run`, `npx`, `bazel` and `args`:
 
-| Placeholder | Becomes                                                       |
-| ----------- | ------------------------------------------------------------- |
-| `{name}`    | The command's own name, whichever alias was typed.            |
-| `{root}`    | The root file's folder.                                       |
-| `{caller}`  | The folder x was started from.                                |
-| `{python}`  | The Python interpreter running x.                             |
+| Placeholder | Becomes                                                                        |
+| ----------- | ------------------------------------------------------------------------------ |
+| `{name}`    | The command's own name, whichever alias was typed.                             |
+| `{root}`    | The root file's folder.                                                        |
+| `{caller}`  | The folder x was started from.                                                 |
+| `{python}`  | The Python interpreter running x.                                              |
 | `{flags}`   | The `forward` tokens of each global flag given. Only as a whole array element. |
 
 The `bash` script path and `env` values take the first four.
@@ -147,11 +146,11 @@ The `bash` script path and `env` values take the first four.
 
 ### `cwd`
 
-| Value           | Working directory                                        |
-| --------------- | -------------------------------------------------------- |
-| `"config"`      | The folder of the `x.toml` that declares the command.    |
-| `"root"`        | The root file's folder.                                  |
-| `"caller"`      | The folder x was started from.                           |
+| Value           | Working directory                                                    |
+| --------------- | -------------------------------------------------------------------- |
+| `"config"`      | The folder of the `x.toml` that declares the command.                |
+| `"root"`        | The root file's folder.                                              |
+| `"caller"`      | The folder x was started from.                                       |
 | a relative path | That path, relative to the declaring file's folder. It may use `..`. |
 
 A relative `bash` script, or a `run` program written with a
@@ -194,23 +193,23 @@ One handler for a request that matches no command. It
 receives the whole command line as typed, global flags
 included, runs at the root, and its exit status is returned.
 Without this table an unknown command prints
-`x: unknown command: <name>` and exits 2. Per-platform tables
-work as in `[defaults]`.
+`x: unknown command: <name>` and exits 2. Per-platform
+tables work as in `[defaults]`.
 
 ## `[make]`
 
 Present: `x makefile` writes a Makefile from the root file's
 commands. Absent: there is no generated Makefile.
 
-| Key        | Type             | Default                  | Meaning                                                      |
-| ---------- | ---------------- | ------------------------ | ------------------------------------------------------------ |
+| Key        | Type             | Default                  | Meaning                                                          |
+| ---------- | ---------------- | ------------------------ | ---------------------------------------------------------------- |
 | `path`     | string           | `"Makefile"`             | Where to write, inside the root's folder. Its folder must exist. |
-| `launcher` | string           | `npx --yes @tryc.ai/x@…` | What `X` is set to in the generated header.                  |
-| `default`  | string           | none                     | Sets `.DEFAULT_GOAL` in the generated header.                |
-| `header`   | array of strings | generated                | Lines that replace the generated header entirely.            |
-| `order`    | string           | `"declared"`             | `declared`, or `alpha` to sort targets by name.              |
-| `args`     | boolean          | `true`                   | Whether recipes end with `$(ARGS)`.                          |
-| `aliases`  | boolean          | `false`                  | Whether each alias gets a target of its own.                 |
+| `launcher` | string           | `npx --yes @tryc.ai/x@…` | What `X` is set to in the generated header.                      |
+| `default`  | string           | none                     | Sets `.DEFAULT_GOAL` in the generated header.                    |
+| `header`   | array of strings | generated                | Lines that replace the generated header entirely.                |
+| `order`    | string           | `"declared"`             | `declared`, or `alpha` to sort targets by name.                  |
+| `args`     | boolean          | `true`                   | Whether recipes end with `$(ARGS)`.                              |
+| `aliases`  | boolean          | `false`                  | Whether each alias gets a target of its own.                     |
 
 The generated header is:
 
@@ -269,14 +268,14 @@ no table for an agent, `resume` says which one to add.
 x reads the session files of six agents under the home
 directory, so it can tell which of them recorded an id:
 
-| Agent    | Product     | Also named                   | Reads                                      | Resumes with              |
-| -------- | ----------- | ---------------------------- | ------------------------------------------ | ------------------------- |
-| `claude` | Claude Code | `claude-code`, `claude_code` | `~/.claude/projects/`                      | `--resume <id>`           |
-| `codex`  | Codex       |                              | `~/.codex/sessions/`                       | `-C <folder> resume <id>` |
-| `agy`    | Antigravity | `antigravity`                | `~/.gemini/antigravity-cli/conversations/` | `--conversation <id>`     |
-| `kimi`   | Kimi Code   | `kimi-code`, `kimi_code`     | `~/.kimi-code/sessions/`, `~/.kimi-code/session_index.jsonl` | `--session <id>` |
-| `pi`     | Pi          |                              | `~/.pi/agent/sessions/`                    | `--session <id>`          |
-| `grok`   | Grok Build  | `grok-build`, `grok_build`   | `~/.grok/sessions/`                        | `--resume <id>`           |
+| Agent    | Product     | Also named                   | Reads                                                        | Resumes with              |
+| -------- | ----------- | ---------------------------- | ------------------------------------------------------------ | ------------------------- |
+| `claude` | Claude Code | `claude-code`, `claude_code` | `~/.claude/projects/`                                        | `--resume <id>`           |
+| `codex`  | Codex       |                              | `~/.codex/sessions/`                                         | `-C <folder> resume <id>` |
+| `agy`    | Antigravity | `antigravity`                | `~/.gemini/antigravity-cli/conversations/`                   | `--conversation <id>`     |
+| `kimi`   | Kimi Code   | `kimi-code`, `kimi_code`     | `~/.kimi-code/sessions/`, `~/.kimi-code/session_index.jsonl` | `--session <id>`          |
+| `pi`     | Pi          |                              | `~/.pi/agent/sessions/`                                      | `--session <id>`          |
+| `grok`   | Grok Build  | `grok-build`, `grok_build`   | `~/.grok/sessions/`                                          | `--resume <id>`           |
 
 These layouts and arguments are what the code encodes. They
 were not checked against the agents' current releases.
@@ -330,11 +329,11 @@ A custom agent's launcher starts at the root. `resume` and
 Launcher arrays, `args`, `resume` and `last` take `{root}`,
 `{caller}` and `{python}`, and also:
 
-| Placeholder | Becomes                                                |
-| ----------- | ------------------------------------------------------ |
-| `{agent}`   | The agent's name.                                      |
+| Placeholder | Becomes                                                 |
+| ----------- | ------------------------------------------------------- |
+| `{agent}`   | The agent's name.                                       |
 | `{session}` | The session id; `last` for a custom agent asked for it. |
-| `{cwd}`     | The folder the launcher starts in, as described above. |
+| `{cwd}`     | The folder the launcher starts in, as described above.  |
 
 `{flags}` expands to nothing here.
 
@@ -351,8 +350,8 @@ x resume --uuid <id>           also --session, --id, and each with =<id>
 
 Keys are matched without regard to case, and any agent name
 or alias works as a key. `last` prefers the newest session
-recorded in the root's folder and otherwise takes the
-newest one anywhere.
+recorded in the root's folder and otherwise takes the newest
+one anywhere.
 
 An argument that is none of these is passed on to the agent.
 Until an id has been given, the first argument that starts
@@ -372,9 +371,9 @@ run = ["npm", "run", "dev"]
 - Only `[commands.*]` is allowed.
 - A folder command replaces a command from a farther file
   that it collides with by name or alias, and takes a
-  colliding alias away from one that keeps its own name.
-  Two commands in the same file that answer to one name are
-  an error.
+  colliding alias away from one that keeps its own name. Two
+  commands in the same file that answer to one name are an
+  error.
 - `help` lists what is visible from the working directory.
 - `check`, run from inside the folder, reports each
   replacement and each alias taken as a `note`.
@@ -383,14 +382,14 @@ run = ["npm", "run", "dev"]
 
 ## Built-in commands
 
-| Command    | Does                                                                                             |
-| ---------- | ------------------------------------------------------------------------------------------------ |
-| `help`     | Lists commands; `help <name>`; `--json` for tools; `--all` to include hidden ones and built-ins. |
-| `version`  | Prints the running version.                                                                      |
+| Command    | Does                                                                                                                                                                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `help`     | Lists commands; `help <name>`; `--json` for tools; `--all` to include hidden ones and built-ins.                                                                                                                                                       |
+| `version`  | Prints the running version.                                                                                                                                                                                                                            |
 | `check`    | Loads the files that apply here, and every other `x.toml` Git tracks under the root as it would load from its own folder; warns about missing scripts; compares the Makefile. A folder file Git does not track is checked only from inside its folder. |
-| `init`     | Writes a starter `x.toml` here: a root file, or a folder file below a root. Never overwrites.    |
-| `makefile` | Writes the Makefile, or compares it with `--check`.                                              |
-| `resume`   | Resumes a coding-agent session by id.                                                            |
+| `init`     | Writes a starter `x.toml` here: a root file, or a folder file below a root. Never overwrites.                                                                                                                                                          |
+| `makefile` | Writes the Makefile, or compares it with `--check`.                                                                                                                                                                                                    |
+| `resume`   | Resumes a coding-agent session by id.                                                                                                                                                                                                                  |
 
 A repository command with the same name as a built-in wins.
 `x --builtin <name>` always runs the built-in.
@@ -401,14 +400,14 @@ One object. `commands` lists every command, the repository's
 first and then the built-ins the repository did not replace,
 each with the same keys:
 
-| Key                                                     | Value                                                                   |
-| ------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `name`, `description`, `aliases`, `platforms`, `hidden` | As declared.                                                            |
-| `builtin`                                               | `true` for one of x's own commands that no repository command replaced. |
+| Key                                                     | Value                                                                                                     |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `name`, `description`, `aliases`, `platforms`, `hidden` | As declared.                                                                                              |
+| `builtin`                                               | `true` for one of x's own commands that no repository command replaced.                                   |
 | `kind`                                                  | The handler: `run`, `bash`, `npx`, `bazel`, `builtin`, or `default` for a command that uses `[defaults]`. |
-| `cwd`                                                   | The command's `cwd` setting as written, such as `"config"`; `null` for a built-in. |
-| `source`                                                | The declaring `x.toml`, relative to the root; `null` for a built-in.    |
-| `make`                                                  | Whether the command is a target in the generated Makefile.              |
+| `cwd`                                                   | The command's `cwd` setting as written, such as `"config"`; `null` for a built-in.                        |
+| `source`                                                | The declaring `x.toml`, relative to the root; `null` for a built-in.                                      |
+| `make`                                                  | Whether the command is a target in the generated Makefile.                                                |
 
 When the repository has an `x.toml`, the built-ins it did
 not replace are marked `hidden`. The object also holds
@@ -441,13 +440,13 @@ and still dispatch its own repository's commands.
 The status of the command that ran, with these exceptions
 that come from x itself:
 
-| Status | Meaning                                                                                       |
-| ------ | --------------------------------------------------------------------------------------------- |
-| 1      | `check` found an error, `makefile --check` found a stale file, or `init` or `makefile` did not write. |
+| Status | Meaning                                                                                                                                                                    |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1      | `check` found an error, `makefile --check` found a stale file, or `init` or `makefile` did not write.                                                                      |
 | 2      | Unknown command, bad usage, an `x.toml` that does not load, `makefile` with no `[make]` table or a command name Make cannot use, or a `resume` request that cannot be met. |
-| 126    | The program is there but could not be run.                                                    |
-| 127    | Program or working directory not found, unsupported platform, no Python 3.11 or newer, or `npx` could not be started for a pinned version. |
-| 141    | The reader of x's own output went away, as in `x help \| head -1` on long output.              |
+| 126    | The program is there but could not be run.                                                                                                                                 |
+| 127    | Program or working directory not found, unsupported platform, no Python 3.11 or newer, or `npx` could not be started for a pinned version.                                 |
+| 141    | The reader of x's own output went away, as in `x help \| head -1` on long output.                                                                                          |
 
 Messages from x start with `x: `, or `resume: ` from that
 built-in. An `x.toml` that does not load is reported with
@@ -458,21 +457,20 @@ with the root file's path.
 
 ## Signals
 
-On macOS and Linux, x forwards `SIGTERM` and `SIGHUP` to
-the command. It forwards `SIGINT` and `SIGQUIT` too, except
+On macOS and Linux, x forwards `SIGTERM` and `SIGHUP` to the
+command. It forwards `SIGINT` and `SIGQUIT` too, except
 while its standard input is a terminal, because a terminal
 delivers those to the command itself. Other signals are not
 forwarded.
 
 A command ended by a signal ends x by the same signal, with
 exceptions on a Node version in which the launcher stays
-running as the parent of the engine (Node 18 and 20, and
-any other without `process.execve`). There, for a signal
-that Node keeps for itself or ignores, x exits with 128 plus
-the signal's number instead: `SIGUSR1`, `SIGPIPE` and
-`SIGXFSZ` were seen to behave this way. A signal Node has no
-name for, such as `SIGEMT` on macOS, is reported there as
-status 0.
+running as the parent of the engine (Node 18 and 20, and any
+other without `process.execve`). There, for a signal that
+Node keeps for itself or ignores, x exits with 128 plus the
+signal's number instead: `SIGUSR1`, `SIGPIPE` and `SIGXFSZ`
+were seen to behave this way. A signal Node has no name for,
+such as `SIGEMT` on macOS, is reported there as status 0.
 
 None of this has been run on Windows. There, the engine
 forwards no signals to the command.
