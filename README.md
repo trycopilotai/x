@@ -59,8 +59,10 @@ agent following the skill.
 
 **Not measured, stated up front.**
 
-- No agent followed the skill to produce the evidence here.
-  The recorded session is the tool, run by a script.
+- The animated demo is a scripted tool session. A separate
+  Codex skill exercise is recorded below. Claude execution
+  was rejected by its session rate limit; live GitHub
+  installs remain unverified.
 - Before this release the suite was run on macOS, on
   Python 3.11, 3.12 and 3.13 with Node 26, and on Linux in a
   container, on Python 3.12 and 3.13 with Node 24. It was
@@ -389,9 +391,38 @@ the output with the transcript line for line, re-renders
 both images, and checks the social preview against its
 stamp.
 
-This is evidence that the tool does what the session shows
-on the machine that recorded it. It is not evidence that an
-agent following `SKILL.md` uses the tool correctly.
+This scripted demo records the tool on the machine that
+recorded it. The separate agent exercise below records
+Codex following `SKILL.md`.
+
+### Actual agent exercise
+
+The fixtures in `evidence/fixtures/` are synthetic. Codex CLI
+0.162.1 read the skill, discovered the pinned commands, ran
+`hello "two words"`, added `greet`, regenerated the Makefile
+through x, ran `greet friend` directly and through Make,
+and checked configuration and Makefile freshness. The
+local launcher was `node bin/x.js`; no npm publication was
+needed. A second `$x` invocation used repository skill
+discovery and ran the same checks without editing files.
+A third `@x` invocation used a locally installed marketplace
+plugin and repeated command discovery, dispatch and checks.
+
+[`evidence/agent-manifest.json`](evidence/agent-manifest.json)
+binds the input commit, skill, fixture bytes and transcripts.
+[`codex-skill.jsonl`](evidence/transcripts/codex-skill.jsonl)
+[`codex-discovery.jsonl`](evidence/transcripts/codex-discovery.jsonl)
+and [`codex-plugin.jsonl`](evidence/transcripts/codex-plugin.jsonl)
+are native event streams with local absolute paths replaced
+by fixture paths. They are edited transcripts; no command
+outputs or agent steps were synthesized. Raw streams and
+the ordered redaction chain are retained privately for the
+release reviewers.
+
+The evidence tests replay the recorded commands against the
+recorded output configuration and compare the generated
+Makefile byte for byte. They do not rerun an agent or prove
+that another agent will produce the same result.
 
 ## Development
 

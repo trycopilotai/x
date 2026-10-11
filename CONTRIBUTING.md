@@ -7,7 +7,8 @@ behaviours, each of which has tests:
 arguments reach it as they were typed, with no shell in
 between. Its streams are the caller's, its exit status is
 returned as is, and a signal that ends it ends x the same
-way.
+way, subject to the older-Node relay exceptions listed in
+`docs/reference.md`.
 
 **The Makefile is a pure function of `x.toml`.** The same
 file renders the same bytes on every platform, and
