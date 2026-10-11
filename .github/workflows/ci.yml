@@ -95,9 +95,9 @@ jobs:
           for tarball in "$GITHUB_WORKSPACE"/dist/*.tgz; do
             workdir="$(mktemp -d)"
             cd "$workdir"
-            npx --yes "$tarball" --version
-            npx --yes "$tarball" init
-            npx --yes "$tarball" hello
+            npx --yes --package "$tarball" x --version
+            npx --yes --package "$tarball" x init
+            npx --yes --package "$tarball" x hello
           done
 
   oldest-node:
