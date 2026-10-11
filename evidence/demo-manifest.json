@@ -3,11 +3,11 @@
   "date": "2026-10-10",
   "skill": {
     "path": "skills/x/SKILL.md",
-    "sha256": "63d4224b2f3b19225dd5b9a610e9a026485cff233d255703e7ba3d2f34595274"
+    "sha256": "4279610447c97de2d078540afc1c5f7dc04499372350e3405e4d747d3b0b5744"
   },
   "interface": {
     "path": "skills/x/agents/openai.yaml",
-    "sha256": "00d03ef9c45e6884173115dfb110b8ada4c2b39dacfc5f5888fe5ffab76855b1"
+    "sha256": "c9ab68958df14ec3cc30299d70162c69348609a9241c529044607c04f91940c6"
   },
   "programs": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "path": "bin/x.js",
-      "sha256": "4373ce2ffdbf092489320d0abebacf2a8d7a69ad6ea2fe0b3d3ee979916e1921"
+      "sha256": "a32c737b3dcaf88fe804942e21411847b8065e2917f582a6425a9735f275328d"
     },
     {
       "path": "x/__init__.py",
@@ -24,11 +24,11 @@
     },
     {
       "path": "x/commands.py",
-      "sha256": "feb99d75335ed019de02bc711de78116fc265953c0ea6bca28041a7a07b44188"
+      "sha256": "2bb117e269a365b7d76f2c7defa284b890dd1e1a988495338e48aaff3e18a764"
     },
     {
       "path": "x/config.py",
-      "sha256": "f564579cd56f66a24aba21b56e5e406155a1467b31d97b07a778ba90a27da478"
+      "sha256": "4cd703197c9396a4a80cfae45145229daf1cf3b4a63a722da5cac380c285110c"
     },
     {
       "path": "x/context.py",
@@ -36,7 +36,7 @@
     },
     {
       "path": "x/dispatch.py",
-      "sha256": "c0a163c123af5bea6e453d8de140097d72f7f90ea25ec89143f6febc3d0a6414"
+      "sha256": "2c57e331f7940c58c47563afe1feb5a8fe7e7225e310ac5212c04b2587d875bc"
     },
     {
       "path": "x/execution.py",
@@ -68,7 +68,7 @@
     },
     {
       "path": "x/sessions.py",
-      "sha256": "d4d54cf68e2566186ccf5eddedda83de6a90bf8498198eb05939c47886dcc231"
+      "sha256": "c39a545b5d40694fb12a40cd5910fb82c75309de8f18c0483d8202033414af16"
     },
     {
       "path": "x/wsl.py",
@@ -90,7 +90,7 @@
       "make hello ARGS=again",
       "x makefile --check && echo up to date"
     ],
-    "interpreter": "Python 3.13.13",
+    "interpreter": "Python 3.12.13",
     "node": "Node 26.10.0",
     "working_directory": "an empty throwaway directory, with x and python3 put on PATH ahead of /usr/bin and /bin"
   },

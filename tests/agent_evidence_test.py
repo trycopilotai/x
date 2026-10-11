@@ -39,7 +39,7 @@ class AgentEvidenceTest(unittest.TestCase):
         self.assertTrue(any("cat skills/x/SKILL.md" in i["command"] for i in commands))
         for fragment, output in [
             ('hello "two words"', "hello two words\n"),
-            ("node bin/x.js greet friend", "greetings friend\n"),
+            ("node bin/x.js greet ", "greetings friend\n"),
             ("make greet ARGS=friend", "greetings friend\n"),
             ("--builtin makefile --check", ""),
         ]:

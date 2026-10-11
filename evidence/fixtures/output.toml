@@ -6,7 +6,7 @@ description = "Print a greeting."
 run = ["{python}", "-c", "import sys; print('hello', *sys.argv[1:])"]
 
 [commands.greet]
-description = "Print greetings followed by arguments."
+description = "Print greetings and arguments."
 run = ["{python}", "-c", "import sys; print('greetings', *sys.argv[1:])"]
 
 [make]

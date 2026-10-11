@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "input_commit": "14b39f6c274ef1db1f6269c306453090c15c72e2",
-  "date": "2026-10-11T01:15:47.596751+00:00",
+  "input_commit": "de0289fbd07b8c32188473d4201e98903267dd0a",
+  "date": "2026-10-11T03:41:07.276816+00:00",
   "agent": {
     "name": "Codex",
     "version": "0.162.1",
@@ -10,14 +10,15 @@
   "invocation": "$x Use the installed x skill to inspect this synthetic repository's commands, run hello with the argument \"two words\", add a root command named greet that prints \"greetings\" followed by its arguments using the existing Python-command pattern, regenerate the Makefile through x, run greet with \"friend\", run make greet ARGS=friend, and validate configuration and Makefile freshness. Report exact outputs. Follow AGENTS.md. Do not hand-edit Makefile, change the version pin, commit or publish.\n",
   "skill": {
     "path": "skills/x/SKILL.md",
-    "sha256": "63d4224b2f3b19225dd5b9a610e9a026485cff233d255703e7ba3d2f34595274"
+    "sha256": "4279610447c97de2d078540afc1c5f7dc04499372350e3405e4d747d3b0b5744"
   },
   "output": {
     "path": "evidence/transcripts/codex-skill.jsonl",
-    "sha256": "240fc1f1dcba9811a854614b04cd50eb1ed133d17f241a40099359d6d6f3ef38",
+    "sha256": "4d2612f4f88fd0ed980f235383182fff6a7539594c739715d0d11f74cc132460",
     "edited": true,
     "transforms": [
-      "ordered absolute-path replacement; private source and lineage retained"
+      "ordered absolute-path replacement; private source and lineage retained",
+      "Exact private formatter filename replacement; raw source and transformation retained privately."
     ]
   },
   "discovery": {
@@ -41,7 +42,7 @@
     },
     {
       "path": "evidence/fixtures/output.toml",
-      "sha256": "e804c665ede1fef73c72678d30b38ca3c8fa6eba7b25a111f1587f02cf8cc93a"
+      "sha256": "5a80b8e2513af90bfddb08230f68854c6605d438159ac51972c5c69d6fd14fe1"
     }
   ],
   "unverified": [
@@ -51,5 +52,6 @@
     "actual Node 18",
     "startup latency",
     "resume against live agents"
-  ]
+  ],
+  "input_worktree": "Formatting changes applied to the input commit before this run; exact skill and fixture bytes are bound below."
 }
