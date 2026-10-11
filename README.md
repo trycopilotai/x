@@ -63,17 +63,19 @@ agent following the skill.
   Codex skill exercise is recorded below. Claude execution
   was rejected by its session rate limit; live GitHub
   installs remain unverified.
-- Before this release the suite was run on macOS, on Python
-  3.11, 3.12 and 3.13 with Node 26, and on Linux in a
-  container, on Python 3.12 and 3.13 with Node 24. It was
-  not run on Windows.
+- The 259-test suite passed on macOS with Python 3.11, 3.12
+  and 3.13 and Node 26, and on Linux with Python 3.11.2 and
+  Node 18.20.8 (one process-replacement test skipped). An
+  earlier 257-test revision passed on Linux with Python 3.12
+  and 3.13 and Node 24. It was not run on Windows.
 - On Windows a `bash` handler is sent through WSL. The tests
   check the command line x builds for that and do not start
   WSL.
 - `engines` in `package.json` says Node 18 or newer. The
-  launcher was run on Node 24 and 26. Its path for Node
-  versions that cannot replace the running process is tested
-  on those by hiding that ability from it.
+  launcher was run on Node 18.20.8 and 26; an earlier
+  revision was run on Node 24. Node 18 exercises the relay
+  path because it cannot replace the running process. That
+  path is also tested on Node 26 by hiding that ability.
 - `resume` is tested against folders laid out the way six
   coding agents store their sessions. It was not tested
   against those agents themselves, and the arguments x
@@ -403,10 +405,10 @@ ran `hello "two words"`, added `greet`, regenerated the
 Makefile through x, ran `greet friend` directly and through
 Make, and checked configuration and Makefile freshness. The
 local launcher was `node bin/x.js`; no npm publication was
-needed. A second `$x` invocation used repository skill
-discovery and ran the same checks without editing files. A
-third `@x` invocation used a locally installed marketplace
-plugin and repeated command discovery, dispatch and checks.
+needed. Two earlier runs read the repository-local skill and
+repeated command discovery, dispatch and checks without
+editing files. Their transcripts do not establish
+marketplace plugin selection or the invocation form.
 
 [`evidence/agent-manifest.json`](evidence/agent-manifest.json)
 binds the input commit, skill, fixture bytes and

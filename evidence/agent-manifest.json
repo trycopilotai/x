@@ -24,12 +24,14 @@
   "discovery": {
     "path": "evidence/transcripts/codex-discovery.jsonl",
     "sha256": "708992ec864d06c7a932bd5ee21e64072da85fab3a3da28f9112255422d76ecf",
-    "edited": true
+    "edited": true,
+    "scope": "Earlier run reading the repository-local skill before canonical formatting; the transcript does not establish the invocation form or marketplace plugin selection. The top-level skill hash binds only the primary run."
   },
   "plugin": {
     "path": "evidence/transcripts/codex-plugin.jsonl",
     "sha256": "17550ee64ca992f2a6fa5b654406041098fb59d01faeb3a314c3747f9ec14bc6",
-    "edited": true
+    "edited": true,
+    "scope": "Earlier run reading the repository-local skill before canonical formatting; the transcript does not establish the invocation form or marketplace plugin selection. The top-level skill hash binds only the primary run."
   },
   "fixtures": [
     {
@@ -49,9 +51,23 @@
     "Claude execution: session rate limit",
     "live GitHub install",
     "Windows",
-    "actual Node 18",
     "startup latency",
-    "resume against live agents"
+    "resume against live agents",
+    "marketplace plugin selection and invocation form in the two earlier runs"
   ],
-  "input_worktree": "Formatting changes applied to the input commit before this run; exact skill and fixture bytes are bound below."
+  "input_worktree": "Formatting changes applied to the input commit before this run; exact skill and fixture bytes are bound below.",
+  "runtime_validation": {
+    "node": "18.20.8",
+    "python": "3.11.2",
+    "platform": "Linux container",
+    "tests": 259,
+    "skipped": 1,
+    "skip_reason": "process replacement is unavailable on Node 18",
+    "scope": "Retained release-validation log; not part of the primary agent exercise.",
+    "input_commit": "7291891c545e113d903fa6ce1fc7516e5a7ccce4",
+    "log": {
+      "path": "evidence/runtime/node18-suite.log",
+      "sha256": "85f49b0a9b93737c51de5de2f54579a42677e6c8aa49ca850e088632bcaefbc6"
+    }
+  }
 }
