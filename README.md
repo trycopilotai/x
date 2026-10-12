@@ -465,8 +465,8 @@ outputs or agent steps were synthesized. Raw streams and the
 ordered redaction chain are retained privately for the
 release reviewers.
 
-Claude Code 2.1.296 ran the skill of tag `v0.1.1`,
-installed at project scope and invoked as `/x`, against
+Claude Code 2.1.296 ran the skill of tag `v0.1.1`, installed
+at project scope and invoked as `/x`, against
 `@tryc.ai/x@0.1.1` from the npm registry. It listed the
 commands with `help --json`, ran `hello "two words"`, added
 `greet`, regenerated the Makefile through x, ran `greet`
