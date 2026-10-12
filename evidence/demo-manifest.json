@@ -3,7 +3,7 @@
   "date": "2026-10-12",
   "skill": {
     "path": "skills/x/SKILL.md",
-    "sha256": "0a620c3b571dc2b238b2a3a96c776a6b15c06cf8bbbe323702177919def063c7"
+    "sha256": "1a29cc646ca4309d0ee4fb1f952f5dd1009953c06e95c750ef34f633663699ff"
   },
   "interface": {
     "path": "skills/x/agents/openai.yaml",
@@ -20,7 +20,7 @@
     },
     {
       "path": "x/__init__.py",
-      "sha256": "c61fcd252f11f3439751a2e9ec464da4966a55e5a923c9664986664b6837d811"
+      "sha256": "ee4d2819bdd0f9fb3d55dbd221d74f83e02f81545ba7bdbb456cf046484d2bd9"
     },
     {
       "path": "x/commands.py",

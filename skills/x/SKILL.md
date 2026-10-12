@@ -31,7 +31,7 @@ an `[x]` table. Read its pin:
 
 ```toml
 [x]
-version = "0.1.1"
+version = "0.1.2"
 ```
 
 Run x as `npx --yes @tryc.ai/x@<version>` with that version.
@@ -137,7 +137,7 @@ Never edit a generated Makefile by hand; its first line says
 so. Do not change `[x] version` unless asked to. Every key
 is described in x's reference, which is also the file
 `docs/reference.md` inside the npm package:
-<https://github.com/trycopilotai/x/blob/v0.1.1/docs/reference.md>
+<https://github.com/trycopilotai/x/blob/v0.1.2/docs/reference.md>
 
 ## 5. Folder files
 
@@ -156,7 +156,7 @@ not create an `x.toml` unless asked.
 When asked to set x up:
 
 ```sh
-npx --yes @tryc.ai/x@0.1.1 --builtin init
+npx --yes @tryc.ai/x@0.1.2 --builtin init
 ```
 
 Run it in the repository's top folder. It writes a starter
