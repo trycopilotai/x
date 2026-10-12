@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Find, run, add and change a repository's commands through x, a dispatcher driven by an x.toml file.",
   "author": {
-    "name": "Pramod Kotipalli"
+    "name": "trycopilot.ai LLC"
   },
   "homepage": "https://github.com/trycopilotai/x",
   "repository": "https://github.com/trycopilotai/x",
