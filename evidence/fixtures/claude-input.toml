@@ -1,0 +1,8 @@
+[x]
+version = "0.1.1"
+
+[commands.hello]
+description = "Print a greeting."
+run = ["{python}", "-c", "import sys; print('hello', *sys.argv[1:])"]
+
+[make]

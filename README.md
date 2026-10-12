@@ -98,9 +98,9 @@ not from the npm registry.
   nothing in the repository records an install from the
   registry.
 - The animated demo is a scripted tool session. A separate
-  Codex skill exercise is recorded below. Claude execution
-  was rejected by its session rate limit; live GitHub
-  installs of this tag remain unverified.
+  Codex skill exercise and a Claude Code one are recorded
+  below. The install blocks have not been run against GitHub
+  at this tag.
 - The 259-test suite passed on macOS with Python 3.11, 3.12
   and 3.13 and Node 26, and on Linux with Python 3.11.2 and
   Node 18.20.8 (one process-replacement test skipped). An
@@ -433,8 +433,8 @@ both images, and checks the social preview against its
 stamp.
 
 This scripted demo records the tool on the machine that
-recorded it. The separate agent exercise below records Codex
-following `SKILL.md`.
+recorded it. The separate agent exercises below record Codex
+and Claude Code using the skill.
 
 ### Actual agent exercise
 
@@ -464,6 +464,21 @@ by fixture paths. They are edited transcripts; no command
 outputs or agent steps were synthesized. Raw streams and the
 ordered redaction chain are retained privately for the
 release reviewers.
+
+Claude Code 2.1.296 ran the skill of tag `v0.1.1`,
+installed at project scope and invoked as `/x`, against
+`@tryc.ai/x@0.1.1` from the npm registry. It listed the
+commands with `help --json`, ran `hello "two words"`, added
+`greet`, regenerated the Makefile through x, ran `greet`
+directly and through Make, and both checks passed. Its first
+attempt failed because its shell did not split a variable
+holding the launcher; it then ran the launcher directly.
+[`claude-skill.jsonl`](evidence/transcripts/claude-skill.jsonl)
+is that run's event stream, edited: each event is reduced to
+its messages, tool calls and results, and absolute paths are
+replaced. The stream lists the skill as available; it does
+not show the skill text being loaded. The fixtures are
+`evidence/fixtures/claude-*`.
 
 The evidence tests replay the recorded commands against the
 recorded output configuration and compare the generated

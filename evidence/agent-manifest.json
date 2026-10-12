@@ -49,15 +49,13 @@
     }
   ],
   "unverified": [
-    "Claude execution: session rate limit",
     "live GitHub install",
     "Windows",
     "startup latency",
     "resume against live agents",
     "marketplace plugin selection and invocation form in the two earlier runs",
-    "npm 0.1.0 publication",
-    "four-scope ownership in repository evidence",
-    "current skill execution after npm-status documentation change"
+    "current skill execution after npm-status documentation change",
+    "Claude Code as a marketplace plugin (/x:x)"
   ],
   "input_worktree": "Formatting changes applied to the input commit before this run; exact skill and fixture bytes are bound below.",
   "runtime_validation": {
@@ -73,5 +71,43 @@
       "path": "evidence/runtime/node18-suite.log",
       "sha256": "85f49b0a9b93737c51de5de2f54579a42677e6c8aa49ca850e088632bcaefbc6"
     }
+  },
+  "claude": {
+    "agent": {
+      "name": "Claude Code",
+      "version": "2.1.296",
+      "model": "claude-sonnet-5-5",
+      "invoked_the_skill": true
+    },
+    "date": "2026-10-12",
+    "input_tag": "v0.1.1",
+    "package": "@tryc.ai/x@0.1.1 from the npm registry",
+    "installation": "project scope: .claude/skills/x linked to the skill folder of a checkout of tag v0.1.1",
+    "invocation": "/x Use the installed x skill to inspect this repository's commands, run hello with the argument \"two words\", add a root command named greet that prints \"greetings\" followed by its arguments using the existing Python-command pattern, regenerate the Makefile through x, run greet with \"friend\", run make greet ARGS=friend, and validate configuration and Makefile freshness. Report exact outputs. Do not hand-edit Makefile, change the version pin, commit or publish.",
+    "output": {
+      "path": "evidence/transcripts/claude-skill.jsonl",
+      "sha256": "fc2e7d824d6e418a8e3933730e58d12b2b501d7c07e23520b68eb96458e30f4f",
+      "edited": true,
+      "transforms": [
+        "each event reduced to its type, message content, tool calls and tool results; identifiers, timings, usage and the lists of other installed tools, skills and servers removed",
+        "absolute paths replaced by placeholder paths",
+        "start-up event reduced to model, client version and the x skill entry"
+      ],
+      "scope": "The stream lists the x skill as available and the request began with /x. It does not show the skill text being loaded."
+    },
+    "fixtures": [
+      {
+        "path": "evidence/fixtures/claude-input.toml",
+        "sha256": "13b3421a7ec83962a95e8e5efe3b23f67385bd4cfcfab3d1ae6725d0425ca838"
+      },
+      {
+        "path": "evidence/fixtures/claude-output.toml",
+        "sha256": "f96d592afe4e6672422a7db242b152ac44476a8040d6eb9f555a133abf50f6b6"
+      },
+      {
+        "path": "evidence/fixtures/claude-Makefile",
+        "sha256": "d6031ee87e9bb69a097007474464b4ea65e86459eb183c36d0f5bcc48fe297ba"
+      }
+    ]
   }
 }

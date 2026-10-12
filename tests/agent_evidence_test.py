@@ -56,6 +56,43 @@ class AgentEvidenceTest(unittest.TestCase):
         self.assertIs(manifest["agent"]["invoked_the_skill"], True)
         self.assertIs(manifest["output"]["edited"], True)
 
+    def test_claude_code_run_is_bound_and_shows_its_steps(self):
+        manifest = json.loads((ROOT / "evidence/agent-manifest.json").read_text())
+        record = manifest["claude"]
+        for bound in [record["output"], *record["fixtures"]]:
+            with self.subTest(path=bound["path"]):
+                actual = hashlib.sha256((ROOT / bound["path"]).read_bytes()).hexdigest()
+                self.assertEqual(actual, bound["sha256"])
+        events = [
+            json.loads(line)
+            for line in (ROOT / record["output"]["path"]).read_text().splitlines()
+        ]
+        start = events[0]
+        self.assertEqual(start["claude_code_version"], record["agent"]["version"])
+        self.assertEqual(start["skills"], ["x"])
+        commands = []
+        results = []
+        for event in events:
+            if event["type"] not in ("assistant", "user"):
+                continue
+            for block in event["message"]["content"]:
+                if block["type"] == "tool_use":
+                    commands.append(block["input"].get("command", ""))
+                if block["type"] == "tool_result":
+                    results.append(str(block["content"]))
+        observed = "\n".join(results)
+        for fragment in [
+            "--builtin help --json",
+            'hello "two words"',
+            "--builtin makefile",
+            "make greet ARGS=friend",
+        ]:
+            self.assertTrue(any(fragment in command for command in commands), fragment)
+        for output in ["hello two words", "greetings friend"]:
+            self.assertIn(output, observed)
+        self.assertEqual(events[-1]["subtype"], "success")
+        self.assertIs(record["agent"]["invoked_the_skill"], True)
+
     @unittest.skipUnless(
         shutil.which("node") and shutil.which("make"), "node and make required"
     )
