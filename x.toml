@@ -2,7 +2,7 @@
 # this checkout rather than a published version.
 
 [x]
-version = "0.1.0"
+version = "0.1.1"
 
 [commands.test]
 description = "Run the test suite."

@@ -26,7 +26,7 @@ from x.model import SpecError
 # and a value handed to the command through the environment.
 DECLARED = r"""
 [x]
-version = "0.1.0"
+version = "0.1.1"
 naming = "kebab"
 
 [commands.start]
@@ -124,7 +124,7 @@ resume:
 # pattern rule after `help`.
 SORTED = r"""
 [x]
-version = "0.1.0"
+version = "0.1.1"
 naming = "snake"
 
 [defaults]
@@ -248,7 +248,7 @@ class RenderTest(MakefileTestCase):
 
     def test_folder_commands_never_become_targets(self):
         root = self.root_config(
-            '[x]\nversion = "0.1.0"\n'
+            '[x]\nversion = "0.1.1"\n'
             '[commands.go]\ndescription = "Go."\nrun = ["go"]\n[make]\n'
         )
         (self.root / "sub").mkdir()
@@ -264,7 +264,7 @@ class RenderTest(MakefileTestCase):
     def test_prelude_recipe_and_after_belong_to_the_commands_own_target(self):
         rendered = render_makefile(
             self.root_config(
-                '[x]\nversion = "0.1.0"\n'
+                '[x]\nversion = "0.1.1"\n'
                 '[commands.ask]\ndescription = "A."\nrun = ["a"]\naliases = ["q"]\n'
                 'make.prelude = ["ask: export P := 1"]\n'
                 'make.recipe = ["@custom"]\n'
@@ -281,7 +281,7 @@ class RenderTest(MakefileTestCase):
 
     def test_a_command_can_opt_its_aliases_in_or_out(self):
         config = (
-            '[x]\nversion = "0.1.0"\n'
+            '[x]\nversion = "0.1.1"\n'
             '[commands.build]\ndescription = "B."\nrun = ["b"]\naliases = ["b"]\n'
             "make.aliases = {build}\n"
             '[commands.test]\ndescription = "T."\nrun = ["t"]\naliases = ["t"]\n'
@@ -303,7 +303,7 @@ class RenderTest(MakefileTestCase):
 
     def test_duplicate_targets_are_rejected(self):
         root = self.root_config(
-            '[x]\nversion = "0.1.0"\n'
+            '[x]\nversion = "0.1.1"\n'
             '[commands.go]\ndescription = "Go."\nrun = ["go"]\naliases = ["g"]\n'
             '[commands.g]\ndescription = "G."\nrun = ["g"]\n'
             "[make]\naliases = true\n"
@@ -314,7 +314,7 @@ class RenderTest(MakefileTestCase):
 
     def test_names_make_cannot_use_are_rejected(self):
         root = self.root_config(
-            '[x]\nversion = "0.1.0"\n'
+            '[x]\nversion = "0.1.1"\n'
             '[commands."a:b"]\ndescription = "Odd."\nrun = ["a"]\n[make]\n'
         )
 
@@ -323,7 +323,7 @@ class RenderTest(MakefileTestCase):
 
     def test_a_config_without_a_make_table_cannot_render(self):
         with self.assertRaisesRegex(SpecError, "no \\[make\\] table"):
-            render_makefile(self.root_config('[x]\nversion = "0.1.0"\n'))
+            render_makefile(self.root_config('[x]\nversion = "0.1.1"\n'))
 
     @unittest.skipIf(os.name == "nt", "the fixtures set SHELL to /bin/bash")
     @unittest.skipUnless(shutil.which("make"), "make is not installed")

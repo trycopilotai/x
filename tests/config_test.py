@@ -10,7 +10,7 @@ import unittest
 from x.config import ConfigError, load_workspace, normalizer, repository_top
 
 
-ROOT = '[x]\nversion = "0.1.0"\n'
+ROOT = '[x]\nversion = "0.1.1"\n'
 
 
 class ConfigTestCase(unittest.TestCase):
@@ -41,7 +41,7 @@ class RootFileTest(ConfigTestCase):
     def test_minimal_root_has_documented_defaults(self):
         workspace = self.load(ROOT)
 
-        self.assertEqual(workspace.root.version, "0.1.0")
+        self.assertEqual(workspace.root.version, "0.1.1")
         self.assertEqual(workspace.root.naming, "exact")
         self.assertEqual(workspace.root.default, "help")
         self.assertEqual(workspace.root.caller_env, ("X_CALLER_DIRECTORY",))
@@ -62,7 +62,7 @@ class RootFileTest(ConfigTestCase):
             "surprise = 1\n" + ROOT, "top level: unknown key 'surprise'"
         )
         self.assert_rejected(
-            '[x]\nversion = "0.1.0"\ncolour = "red"\n', r"\[x\]: unknown key 'colour'"
+            '[x]\nversion = "0.1.1"\ncolour = "red"\n', r"\[x\]: unknown key 'colour'"
         )
         self.assert_rejected(
             ROOT + '[flags.quiet]\nnames = ["-q"]\nshort = "q"\n',
@@ -106,19 +106,19 @@ class RootFileTest(ConfigTestCase):
             self.load("[x\n")
 
     def test_a_file_that_is_not_utf8_is_a_config_error(self):
-        (self.root / "x.toml").write_bytes(b'[x]\nversion = "0.1.0"\n# \xff\xfe\n')
+        (self.root / "x.toml").write_bytes(b'[x]\nversion = "0.1.1"\n# \xff\xfe\n')
 
         with self.assertRaisesRegex(ConfigError, "x.toml: is not UTF-8 text"):
             load_workspace(self.root)
 
     def test_naming_must_be_a_known_style(self):
         self.assert_rejected(
-            '[x]\nversion = "0.1.0"\nnaming = "camel"\n', "must be one of exact"
+            '[x]\nversion = "0.1.1"\nnaming = "camel"\n', "must be one of exact"
         )
 
     def test_caller_env_must_be_variable_names(self):
         self.assert_rejected(
-            '[x]\nversion = "0.1.0"\ncaller_env = ["NOT OK"]\n',
+            '[x]\nversion = "0.1.1"\ncaller_env = ["NOT OK"]\n',
             "not an environment variable name",
         )
 

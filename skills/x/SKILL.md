@@ -19,12 +19,9 @@ in `x.toml`. People run a command as `x <command>`,
 Makefile, and you read the same list as JSON.
 
 Requirements: Node 18 or newer and Python 3.11 or newer.
-Version 0.1.0 is not published to npm yet. The npm commands
-in this skill apply after the later npm release. For an
-unpublished checkout, use
-`node /absolute/path/to/x/bin/x.js` as `<x>` below. After
-publication, `npx` fetches the package without a global
-installation.
+`npx` fetches the package without a global installation. In
+a checkout of x itself, use
+`node /absolute/path/to/x/bin/x.js` as `<x>` below.
 
 ## 1. Find the pinned version
 
@@ -34,7 +31,7 @@ an `[x]` table. Read its pin:
 
 ```toml
 [x]
-version = "0.1.0"
+version = "0.1.1"
 ```
 
 Run x as `npx --yes @tryc.ai/x@<version>` with that version.
@@ -140,7 +137,7 @@ Never edit a generated Makefile by hand; its first line says
 so. Do not change `[x] version` unless asked to. Every key
 is described in x's reference, which is also the file
 `docs/reference.md` inside the npm package:
-<https://github.com/trycopilotai/x/blob/v0.1.0/docs/reference.md>
+<https://github.com/trycopilotai/x/blob/v0.1.1/docs/reference.md>
 
 ## 5. Folder files
 
@@ -159,7 +156,7 @@ not create an `x.toml` unless asked.
 When asked to set x up:
 
 ```sh
-npx --yes @tryc.ai/x@0.1.0 --builtin init
+npx --yes @tryc.ai/x@0.1.1 --builtin init
 ```
 
 Run it in the repository's top folder. It writes a starter

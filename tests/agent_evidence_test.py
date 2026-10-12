@@ -14,6 +14,11 @@ import unittest
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def _version() -> str:
+    package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+    return package["version"]
+
+
 class AgentEvidenceTest(unittest.TestCase):
     def test_bound_files_and_observed_agent_steps(self):
         manifest = json.loads((ROOT / "evidence/agent-manifest.json").read_text())
@@ -60,7 +65,13 @@ class AgentEvidenceTest(unittest.TestCase):
             shutil.copytree(ROOT / "x", fixture / "x")
             shutil.copytree(ROOT / "bin", fixture / "bin")
             shutil.copyfile(ROOT / "__main__.py", fixture / "__main__.py")
-            shutil.copyfile(ROOT / "evidence/fixtures/output.toml", fixture / "x.toml")
+            # The fixture pins the version the agent ran. Replayed at
+            # that pin, a later x would hand over to that release
+            # instead of running the code under test.
+            recorded = (ROOT / "evidence/fixtures/output.toml").read_text()
+            (fixture / "x.toml").write_text(
+                recorded.replace('version = "0.1.0"', f'version = "{_version()}"')
+            )
             environment = os.environ.copy()
             environment["X_PYTHON"] = sys.executable
             for arguments, expected in [

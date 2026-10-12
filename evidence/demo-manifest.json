@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "date": "2026-10-11",
+  "date": "2026-10-12",
   "skill": {
     "path": "skills/x/SKILL.md",
-    "sha256": "dd89a4d68b81354dff0bbb100ad2be6708ecd51733a1e9e6e54afa02ac78ac74"
+    "sha256": "0a620c3b571dc2b238b2a3a96c776a6b15c06cf8bbbe323702177919def063c7"
   },
   "interface": {
     "path": "skills/x/agents/openai.yaml",
@@ -20,7 +20,7 @@
     },
     {
       "path": "x/__init__.py",
-      "sha256": "3caf978643340721b4e7b1028be3da8cec8a30988f05710c1b1c6fbe6dd3e964"
+      "sha256": "c61fcd252f11f3439751a2e9ec464da4966a55e5a923c9664986664b6837d811"
     },
     {
       "path": "x/commands.py",
@@ -90,7 +90,7 @@
       "make hello ARGS=again",
       "x makefile --check && echo up to date"
     ],
-    "interpreter": "Python 3.12.13",
+    "interpreter": "Python 3.13.13",
     "node": "Node 26.10.0",
     "working_directory": "an empty throwaway directory, with x and python3 put on PATH ahead of /usr/bin and /bin"
   },

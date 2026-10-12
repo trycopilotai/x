@@ -8,7 +8,7 @@ A complete small file:
 
 ```toml
 [x]
-version = "0.1.0"
+version = "0.1.1"
 
 [commands.test]
 description = "Run the tests."
@@ -37,7 +37,7 @@ instead; see [Command line](#command-line).
 
 | Key          | Type             | Default                  | Meaning                                                      |
 | ------------ | ---------------- | ------------------------ | ------------------------------------------------------------ |
-| `version`    | string, required | none                     | The exact x version this repository uses, such as `"0.1.0"`. |
+| `version`    | string, required | none                     | The exact x version this repository uses, such as `"0.1.1"`. |
 | `naming`     | string           | `"exact"`                | How command names are matched: `exact`, `kebab` or `snake`.  |
 | `default`    | string           | `"help"`                 | The command run when none is given.                          |
 | `caller_env` | array of strings | `["X_CALLER_DIRECTORY"]` | Environment variables set to the folder x was started from.  |
@@ -214,7 +214,7 @@ commands. Absent: there is no generated Makefile.
 The generated header is:
 
 ```make
-X := npx --yes @tryc.ai/x@0.1.0
+X := npx --yes @tryc.ai/x@0.1.1
 ARGS ?=
 ```
 

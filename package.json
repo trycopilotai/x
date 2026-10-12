@@ -1,6 +1,6 @@
 {
   "name": "@tryc.ai/x",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A repository command dispatcher driven by x.toml: one command list behind x, make and your coding agent.",
   "license": "MIT",
   "author": "Pramod Kotipalli",
