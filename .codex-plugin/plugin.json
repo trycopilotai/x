@@ -20,7 +20,7 @@
     "displayName": "x",
     "shortDescription": "Find, run and edit a repository's x.toml commands",
     "longDescription": "List the commands a repository declares in x.toml, run them at the pinned version, add or change one, and keep the generated Makefile in step.",
-    "developerName": "Pramod Kotipalli",
+    "developerName": "trycopilot.ai LLC",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Execute"],
     "websiteURL": "https://github.com/trycopilotai/x",
