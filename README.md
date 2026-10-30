@@ -1,13 +1,18 @@
 # x
 
-One command list for a repository, in one file. `x.toml`
-declares the commands; `x <command>` runs them, a generated
-Makefile makes `make <command>` run the same thing, and a
-coding agent reads the same list as JSON.
+One command list for a repository, in one file.
+
+---
 
 [![auto-lint-pr](https://github.com/trycopilotai/x/actions/workflows/auto-lint-pr.yml/badge.svg)](https://github.com/trycopilotai/x/actions/workflows/auto-lint-pr.yml)
 [![ci](https://github.com/trycopilotai/x/actions/workflows/ci.yml/badge.svg)](https://github.com/trycopilotai/x/actions/workflows/ci.yml)
 [![lint](https://github.com/trycopilotai/x/actions/workflows/lint.yml/badge.svg)](https://github.com/trycopilotai/x/actions/workflows/lint.yml)
+
+---
+
+`x.toml` declares the commands; `x <command>` runs them, a
+generated Makefile makes `make <command>` run the same
+thing, and a coding agent reads the same list as JSON.
 
 ```sh
 npx @tryc.ai/x init     # write a starter x.toml
