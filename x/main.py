@@ -16,6 +16,7 @@ from x.execution import NPM_LEAKED_ENV, run_process
 from x.makefile import PACKAGE
 from x.model import Invocation, ProcessRequest, ProcessRunner, SpecError
 from x.registry import build_control_plane
+from x.run import run_main
 
 
 BUILTIN_FLAG = "--builtin"
@@ -70,6 +71,19 @@ def _run_pinned(
         )
 
 
+def _prefixed_run(arguments: Sequence[str]) -> bool:
+    cursor = 0
+    while cursor < len(arguments):
+        token = arguments[cursor]
+        if token in (PINNED_FLAG, BUILTIN_FLAG):
+            cursor += 1
+        elif token == ROOT_FLAG:
+            cursor += 2
+        else:
+            break
+    return arguments[cursor : cursor + 1] == ["run"]
+
+
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -99,6 +113,13 @@ def main(
     if cwd is not None:
         start = cwd
     start = start.resolve()
+
+    # Literal run is reserved before configuration lookup or version repinning.
+    # Repository registries cannot replace the trusted execution transport.
+    if arguments[:1] == ["run"]:
+        return run_main(arguments[1:], start, stdout=stdout, stderr=stderr)
+    if _prefixed_run(arguments):
+        return _fail(error_stream, "use literal x run before runner options", 125)
 
     pinned = False
     if arguments[:1] == [PINNED_FLAG]:

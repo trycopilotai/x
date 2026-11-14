@@ -206,7 +206,53 @@ function run(executable, args, env) {
   });
 }
 
+function runMachinePolicyClient() {
+  // The reserved route must not probe an agent-selected X_PYTHON or PATH
+  // program before admission. A qualified Linux install supplies this Python.
+  if (process.platform !== "linux") {
+    process.stderr.write(
+      "x run: machine-policy transport requires a qualified Linux broker\n"
+    );
+    process.exit(125);
+  }
+  const executable = "/usr/bin/python3";
+  const env = { PATH: "/usr/bin:/bin" };
+  run(
+    executable,
+    [
+      "-E",
+      "-s",
+      "-X",
+      "utf8",
+      PACKAGE_ROOT,
+      ...process.argv.slice(2)
+    ],
+    env
+  );
+}
+
+function reservedRun(argv) {
+  let cursor = 0;
+  while (cursor < argv.length) {
+    if (
+      argv[cursor] === "--pinned" ||
+      argv[cursor] === "--builtin"
+    ) {
+      cursor += 1;
+    } else if (argv[cursor] === "--root") {
+      cursor += 2;
+    } else {
+      break;
+    }
+  }
+  return argv[cursor] === "run";
+}
+
 function main() {
+  if (reservedRun(process.argv.slice(2))) {
+    runMachinePolicyClient();
+    return;
+  }
   const env = childEnvironment(process.env);
   const { executable, tried } = findPython(
     process.platform,

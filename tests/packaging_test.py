@@ -354,6 +354,7 @@ class NpmPackageTest(unittest.TestCase):
                     "__main__.py",
                     "bin/x.js",
                     "docs/reference.md",
+                    "docs/RUN_PROTOCOL.md",
                     "package.json",
                 ]
                 + modules

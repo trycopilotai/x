@@ -486,3 +486,73 @@ forwards no signals to the command.
 `npm_config_package` and `npm_config_call`, which `npx` can
 set in the environment of what it starts, are removed so
 that an `npx` inside a command runs what it was asked to.
+
+## Reserved machine-policy execution
+
+`x run` is reserved before reading `x.toml`, constructing a
+registry, or fetching a pinned engine. A repository command
+named `run` cannot replace this route. Other repository
+commands keep their existing dispatch behavior.
+
+```sh
+x run --here bash -c 'printf hello'
+x run --remote=dev-worker bash -c 'make test'
+x run --remote=dev-worker --provision-ok=1h,10usd docker run image
+x run --here --explain bash -c 'gcc source.c'
+```
+
+Exactly one of `--here` or `--remote=<machine_id>` is
+required. Runner options end at the first command token or
+an optional `--`; all remaining arguments are preserved.
+Duplicate, conflicting, and unknown runner options fail. No
+target comes from the environment, Docker context, or
+repository configuration. `--provision-ok` applies only to a
+remote request and authorizes a positive integer duration in
+seconds, minutes, hours, or days plus a positive decimal USD
+amount with at most six fractional digits. The client
+accepts at most 31 days and 1,000,000 USD; installed policy
+may set much smaller limits. It requests bounded authority;
+the broker may enforce stricter limits. Without the flag,
+the broker must use existing eligible capacity or refuse the
+request.
+
+`--explain` requests a decision without admitting work or
+provisioning resources. It prints the broker's decision as
+JSON. `--capture-output` requests bounded audited output
+capture; arguments and execution metadata are otherwise
+logged with the broker's redaction policy. Broker-received
+requests are audited; local syntax errors fail before a
+request is submitted and do not upload raw arguments. Output
+still streams to the caller in either mode. The client sends
+no environment variables or credentials to the broker.
+
+This implementation uses a Linux Unix socket at
+`/run/machines-run/broker.sock`. Root must own the socket
+and its non-writable parent directories; the client also
+checks the connected peer's kernel credentials. Missing or
+untrusted brokers fail with status 125. Commands are never
+executed as a fallback. The Node launcher's reserved route
+uses `/usr/bin/python3` with a clean startup environment,
+ignoring `X_PYTHON` and interpreter lookup through `PATH`. A
+qualified installation must supply Python 3.11 or newer at
+that path. Other x commands retain their normal launcher
+configuration.
+
+The client preserves argv, binary standard input/output,
+streaming standard error, and broker exit status. SIGINT and
+SIGTERM request cancellation of the complete workload; a
+disconnect produces an ambiguous-outcome error and leaves
+cleanup and reconciliation to the broker. Workspace edits
+are returned as a bounded reviewable result archive whose
+validated descriptor appears on standard error; source files
+are not automatically overwritten. Interactive TTY
+execution, cross-machine client transport, and native
+provider interception remain unqualified and are refused or
+must remain outside rollout. A root-owned installed client,
+trusted broker, protected policy, workload identity, and
+provider confinement are deployment prerequisites. An
+editable x checkout, shell alias, or provider prompt cannot
+establish mandatory agent routing.
+
+The versioned transport and its limitations are specified in
+[RUN_PROTOCOL.md](RUN_PROTOCOL.md).

@@ -365,5 +365,53 @@ class InterpreterDiscoveryTest(LauncherTestCase):
         self.assertIn(str(stub) + " (3.9.6 at /somewhere/old-python)", completed.stderr)
 
 
+class MachinePolicyLauncherTest(LauncherTestCase):
+    def test_prefixed_run_does_not_probe_agent_interpreters(self):
+        sentinel = self.repo / "unexpected-python"
+        hostile = self.repo / "python3"
+        hostile.write_text("#!/bin/sh\necho bad > " + str(sentinel) + "\nexit 99\n")
+        hostile.chmod(0o755)
+        for prefix in (
+            ("--root", "missing"),
+            ("--pinned",),
+            ("--builtin",),
+            ("--pinned", "--root", "missing", "--builtin"),
+            ("--root", "missing", "--pinned"),
+            ("--pinned", "--pinned"),
+            ("--root", "missing", "--root", "missing"),
+            ("--builtin", "--pinned", "--builtin"),
+        ):
+            with self.subTest(prefix=prefix):
+                completed = self.launch(
+                    *prefix,
+                    "run",
+                    "--here",
+                    "true",
+                    env=self.environment(X_PYTHON=str(hostile), PATH=str(self.repo)),
+                )
+                self.assertEqual(completed.returncode, 125)
+                self.assertFalse(sentinel.exists())
+                self.assertNotIn("unexpected-python", completed.stderr)
+
+    def test_reserved_route_does_not_probe_x_python_or_path(self):
+        sentinel = self.repo / "unexpected-python"
+        hostile = self.repo / "python3"
+        hostile.write_text(
+            "#!/bin/sh\necho bad > " + str(sentinel) + "\nexit 99\n", encoding="utf-8"
+        )
+        hostile.chmod(0o755)
+        completed = self.launch(
+            "run",
+            "--here",
+            "true",
+            env=self.environment(X_PYTHON=str(hostile), PATH=str(self.repo)),
+        )
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertFalse(
+            sentinel.exists(), "reserved run executed an agent-selected interpreter"
+        )
+        self.assertNotIn("unexpected-python", completed.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
