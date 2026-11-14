@@ -29,6 +29,7 @@
     "__main__.py",
     "x/*.py",
     "docs/reference.md",
+    "docs/RUN_PROTOCOL.md",
     "LICENSE",
     "README.md"
   ],

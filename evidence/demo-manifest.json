@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "date": "2026-10-12",
+  "date": "2026-11-14",
   "skill": {
     "path": "skills/x/SKILL.md",
     "sha256": "1a29cc646ca4309d0ee4fb1f952f5dd1009953c06e95c750ef34f633663699ff"
@@ -16,7 +16,7 @@
     },
     {
       "path": "bin/x.js",
-      "sha256": "a32c737b3dcaf88fe804942e21411847b8065e2917f582a6425a9735f275328d"
+      "sha256": "73533e3458ce8a3f4a0bbd83396c4aff69bbac0bf95783faa8b3ccceb4c6db89"
     },
     {
       "path": "x/__init__.py",
@@ -52,7 +52,7 @@
     },
     {
       "path": "x/main.py",
-      "sha256": "c5d62d88bb7c86630b8e6837d7996e7ede116c8b84e1c442387927e855a57cc0"
+      "sha256": "d68c310bb0cbcef3cdfb292c9e4e619810367f6027554e6d4fc9248acb11a0f8"
     },
     {
       "path": "x/makefile.py",
@@ -65,6 +65,10 @@
     {
       "path": "x/registry.py",
       "sha256": "0d5cc68cdbd120034021992efa418279399512708ee55bd81eba399f007c29f3"
+    },
+    {
+      "path": "x/run.py",
+      "sha256": "d993ee431ca2ded22fcc1320c63cf02a77ca6944e2a78650642a21ccf44583ae"
     },
     {
       "path": "x/sessions.py",
@@ -90,8 +94,8 @@
       "make hello ARGS=again",
       "x makefile --check && echo up to date"
     ],
-    "interpreter": "Python 3.13.13",
-    "node": "Node 26.10.0",
+    "interpreter": "Python 3.11.2",
+    "node": "Node 22.23.5",
     "working_directory": "an empty throwaway directory, with x and python3 put on PATH ahead of /usr/bin and /bin"
   },
   "output": {
