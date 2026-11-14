@@ -222,12 +222,11 @@ def consume_event(
             raise RunError("invalid broker artifact identity") from None
         if canonical != request["run_id"]:
             raise RunError("invalid broker artifact identity")
+        getuid = getattr(os, "getuid", None)
+        if not callable(getuid):
+            raise RunError("broker artifacts require a Unix caller identity")
         expected_path = (
-            "/var/lib/machines-run/results/"
-            + str(os.getuid())
-            + "/"
-            + canonical
-            + ".tar"
+            "/var/lib/machines-run/results/" + str(getuid()) + "/" + canonical + ".tar"
         )
         size = document.get("bytes")
         digest = document.get("sha256")

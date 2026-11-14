@@ -402,6 +402,39 @@ class EventTest(unittest.TestCase):
         self.assertNotIn("SECRET_SENTINEL", str(error.exception))
 
     def test_artifact_location_identity_size_and_digest_are_bound(self):
+        with patch("x.run.os.getuid", return_value=1001, create=True):
+            identifier = "c85ea761-f573-4cee-a33e-a5b46404fffb"
+            self.request["run_id"] = identifier
+            artifact = {
+                "event": "artifact",
+                "run_id": identifier,
+                "bytes": 1024,
+                "sha256": "a" * 64,
+                "path": "/var/lib/machines-run/results/"
+                + str(1001)
+                + "/"
+                + identifier
+                + ".tar",
+            }
+            output = io.StringIO()
+            self.assertIsNone(
+                consume_event(artifact, self.request, io.StringIO(), output)
+            )
+            self.assertIn("result artifact", output.getvalue())
+            for key, value in (
+                ("run_id", "foreign"),
+                ("bytes", True),
+                ("bytes", 64 * 1024 * 1024 + 1),
+                ("sha256", "BAD"),
+                ("path", "/tmp/SECRET_SENTINEL"),
+            ):
+                modified = dict(artifact)
+                modified[key] = value
+                with self.subTest(key=key), self.assertRaises(RunError) as error:
+                    consume_event(modified, self.request, io.StringIO(), io.StringIO())
+                self.assertNotIn("SECRET_SENTINEL", str(error.exception))
+
+    def test_artifacts_without_unix_identity_fail_closed(self):
         identifier = "c85ea761-f573-4cee-a33e-a5b46404fffb"
         self.request["run_id"] = identifier
         artifact = {
@@ -409,27 +442,14 @@ class EventTest(unittest.TestCase):
             "run_id": identifier,
             "bytes": 1024,
             "sha256": "a" * 64,
-            "path": "/var/lib/machines-run/results/"
-            + str(os.getuid())
-            + "/"
-            + identifier
-            + ".tar",
+            "path": "/var/lib/machines-run/results/1001/" + identifier + ".tar",
         }
-        output = io.StringIO()
-        self.assertIsNone(consume_event(artifact, self.request, io.StringIO(), output))
-        self.assertIn("result artifact", output.getvalue())
-        for key, value in (
-            ("run_id", "foreign"),
-            ("bytes", True),
-            ("bytes", 64 * 1024 * 1024 + 1),
-            ("sha256", "BAD"),
-            ("path", "/tmp/SECRET_SENTINEL"),
-        ):
-            modified = dict(artifact)
-            modified[key] = value
-            with self.subTest(key=key), self.assertRaises(RunError) as error:
-                consume_event(modified, self.request, io.StringIO(), io.StringIO())
-            self.assertNotIn("SECRET_SENTINEL", str(error.exception))
+        with patch("x.run.os.getuid", None, create=True):
+            with self.assertRaises(RunError) as error:
+                self.event(artifact)
+        self.assertIn("Unix caller identity", str(error.exception))
+        self.assertEqual(self.stdout.getvalue(), b"")
+        self.assertEqual(self.stderr.getvalue(), b"")
 
     def test_run_decision_is_validated_without_changing_output(self):
         decision = {
@@ -629,6 +649,10 @@ class SocketIntegrationTest(unittest.TestCase):
         with self.assertRaises(RunError):
             self.exchange(server)
 
+    @unittest.skipIf(
+        os.name == "nt",
+        "self-directed POSIX SIGINT terminates the process on Windows",
+    )
     def test_signal_becomes_cancellation_frame(self):
         def server(channel, request):
             stream = channel.makefile("rb")
@@ -643,6 +667,21 @@ class SocketIntegrationTest(unittest.TestCase):
             channel.sendall(b'{"event":"exit","code":130,"run_id":"socket-run"}\n')
 
         self.assertEqual(self.exchange(server)[0], 130)
+
+
+class UnsupportedTransportTest(unittest.TestCase):
+    def test_non_linux_transport_fails_before_filesystem_or_socket_access(self):
+        for platform in ("win32", "darwin"):
+            with self.subTest(platform=platform), patch(
+                "x.run.sys.platform", platform
+            ), patch(
+                "x.run.Path.lstat", side_effect=AssertionError("filesystem accessed")
+            ), patch(
+                "x.run.socket.socket", side_effect=AssertionError("socket opened")
+            ):
+                with self.assertRaises(RunError) as error:
+                    connect_broker()
+            self.assertIn("qualified Linux broker", str(error.exception))
 
 
 @unittest.skipUnless(hasattr(socket, "SO_PEERCRED"), "Linux peer credentials required")
